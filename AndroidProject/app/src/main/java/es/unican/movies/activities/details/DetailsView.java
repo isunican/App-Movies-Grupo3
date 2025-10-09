@@ -42,22 +42,22 @@ public class DetailsView extends AppCompatActivity {
      * Retrieve movie details fields and populate them with the correct data.
      */
     protected void loadFields(Movie movie) {
-        TextView tvReleaseYear; // = findViewById(R.id.tvReleaseYear);
-        TextView tvDuration; // = findViewById(R.id.tvDuration);
-        TextView tvGenres; // = findViewById(R.id.tvGenres);
-        TextView tvVoteAverage; // = findViewById(R.id.tvVoteAverage);
-        TextView tvSummarizedVote; // = findViewById(R.id.tvSummarizedVote);
+        TextView tvReleaseYear = findViewById(R.id.tvReleaseYear);
+        TextView tvDuration = findViewById(R.id.tvDuration);
+        TextView tvGenres = findViewById(R.id.tvGenres);
+        TextView tvVoteAverage = findViewById(R.id.tvVoteAverage);
+        TextView tvSummarizedVote = findViewById(R.id.tvSummarizedVote);
 
-        // tvReleaseYear.setText(formatValue(movie.getReleaseYear()));
-        // tvDuration.setText(formatValue(movie.getDurationHoursMinutes()));
-        // tvGenres.setText(formatValue(movie.getGenresList()));
-        // tvVoteAverage.setText(formatValue(movie.getVoteAverage()));
-        // tvSummarizedVote.setText(formatValue(movie.getSummarizedAverage()));
+        tvReleaseYear.setText(formatValue(movie.getReleaseYear()));
+        tvDuration.setText(formatValue(movie.getDurationHoursMinutes()));
+        tvGenres.setText(formatValue(movie.getGenresList()));
+        tvVoteAverage.setText(formatValue(movie.getVoteAverage()));
+        tvSummarizedVote.setText(formatValue(movie.getSummarizedAverage()));
 
         // Movie poster
-        ImageView ivPoster; // = findViewById(R.id.ivPoster);
+        ImageView ivPoster = findViewById(R.id.ivPoster);
         String imageUrl = ITmdbApi.getFullImagePath(movie.getPosterPath(), EImageSize.W92);
-        // Picasso.get().load(imageUrl).fit().centerInside().into(ivPoster);
+        Picasso.get().load(imageUrl).fit().centerInside().into(ivPoster);
     }
 
     /**
@@ -71,13 +71,13 @@ public class DetailsView extends AppCompatActivity {
      * Returns "-" if the value is empty or negative, else returns the string representation.
      */
     private String formatValue(int value) {
-        return value < 0 ? "-" : String.valueOf(value);
+        return value < 0 ? "-" : String.format("%.2f", value);
     }
 
     /**
      * Returns "-" if the value is empty or negative, else returns the string representation.
      */
     private String formatValue(double value) {
-        return value < 0 ? "-" : String.valueOf(value);
+        return value < 0 ? "-" : String.format("%.2f", value);
     }
 }

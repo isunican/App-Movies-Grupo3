@@ -60,8 +60,8 @@ public class Movie {
      * @return String duration in hours (h) and minutes (min)
      */
     public String getDurationHoursMinutes() {
-        int hours = totalMinutes / 60;
-        int minutes = totalMinutes % 60;
+        int hours = this.runtime / 60;
+        int minutes = this.runtime % 60;
 
         return hours + "h " + minutes + "min";
     }
