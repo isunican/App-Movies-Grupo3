@@ -39,7 +39,7 @@ public class Movie {
     protected Double voteAverage;
 
     @SerializedName("vote_count")
-    protected int voteCount;
+    protected Integer voteCount;
 
     /**
      * Get the release year for the movie.
@@ -90,12 +90,15 @@ public class Movie {
      *
      * @return double summarized score for the movie
      */
-    public double getSummarizedAverage() {
-        if (this.voteAverage == null || Double.isNaN(this.voteAverage) || this.voteAverage < 0 || this.voteCount <= 0) {
+    public Double getSummarizedAverage() {
+        if (voteAverage == null || voteCount == null) {
+            return null;
+        }
+        if (Double.isNaN(voteAverage) || voteAverage < 0 || voteCount < 0) {
             return Double.NaN;
         }
-        double normalizedCount = 2 * Math.log10(1 + this.voteCount);
-        return (this.voteAverage + normalizedCount) / 2;
+        double normalizedCount = 2 * Math.log10(1 + voteCount);
+        return (voteAverage + normalizedCount) / 2;
     }
 
 }
