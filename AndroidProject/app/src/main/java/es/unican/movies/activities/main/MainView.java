@@ -59,7 +59,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         setSupportActionBar(toolbar);
 
         // instantiate presenter, let it take control
-        presenter = new MainPresenter();
+        presenter = new MainPresenter(repository);
         presenter.init(this);
     }
 

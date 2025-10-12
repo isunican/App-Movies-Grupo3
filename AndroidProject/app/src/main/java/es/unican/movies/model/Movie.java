@@ -91,12 +91,10 @@ public class Movie {
      * @return double summarized score for the movie
      */
     public double getSummarizedAverage() {
-        if (this.voteAverage < 0 || this.voteCount <= 0) {
-            return -1;
+        if (this.voteAverage == null || Double.isNaN(this.voteAverage) || this.voteAverage < 0 || this.voteCount <= 0) {
+            return Double.NaN;
         }
-
         double normalizedCount = 2 * Math.log10(1 + this.voteCount);
-
         return (this.voteAverage + normalizedCount) / 2;
     }
 
