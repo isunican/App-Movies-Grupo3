@@ -97,11 +97,6 @@ android {
         targetCompatibility JavaVersion.VERSION_11
     }
 
-    sourceSets {
-        androidTest {
-            res.srcDirs += 'src/main/res'
-        }
-    }
 }
 
 dependencies {
@@ -128,13 +123,8 @@ dependencies {
 
     // Mockito (mocks for testing)
     testImplementation libs.junit
-    testImplementation libs.mockito.core.v480
     testImplementation libs.mockito.core
     androidTestImplementation libs.mockito.android
-
-    androidTestImplementation libs.espresso.core.v351
-    androidTestImplementation libs.junit.v115
-    androidTestImplementation libs.runner
 
     // Hilt (for dependency injection)
     implementation libs.hilt.android
