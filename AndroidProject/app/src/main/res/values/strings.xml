@@ -2,4 +2,6 @@
     <string name="app_name">Movies</string>
     <string name="movie_poster">Movie Poster</string>
     <string name="info">Info</string>
+    <string name="vote_average">Puntuacion Media:</string>
+    <string name="summarized_vote">Puntuacion Sumaria:</string>
 </resources>
