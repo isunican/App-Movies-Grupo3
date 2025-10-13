@@ -45,6 +45,9 @@ jobs:
         working-directory: ./AndroidProject
         run: chmod +x ./gradlew
 
+      - name: Instalar dependencias del emulador
+        run: sudo apt-get update && sudo apt-get install -y libvulkan1 libx11-6
+
       - name: Run Android tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
