@@ -9,8 +9,15 @@ import androidx.test.core.app.ApplicationProvider;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
+import es.unican.movies.common.SharedPreferencesImpl;
+import es.unican.movies.model.Movie;
+
+@RunWith(RobolectricTestRunner.class)
 @Config(sdk = 36)
 public class SharedPreferencesImplTest {
 
@@ -18,14 +25,11 @@ public class SharedPreferencesImplTest {
 
     @Before
     public void setUp() {
-        // Obtener un contexto de aplicación simulado
-        Context context = ApplicationProvider.getApplicationContext();
-
-        // Crear la instancia de SharedPreferencesImpl con ese contexto
+        Context context = RuntimeEnvironment.getApplication();
         sharedPrefs = new SharedPreferencesImpl(context);
-
-        // Guardar una película pendiente para el caso positivo
-        sharedPrefs.savePendingMovie(617126);
+        Movie movie = new Movie();
+        movie.setId(617126);
+        sharedPrefs.savePendingMovie(movie);
     }
 
     /**
