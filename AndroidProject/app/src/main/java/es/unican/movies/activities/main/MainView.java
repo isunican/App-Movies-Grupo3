@@ -22,6 +22,8 @@ import dagger.hilt.android.AndroidEntryPoint;
 import es.unican.movies.R;
 import es.unican.movies.activities.details.DetailsView;
 import es.unican.movies.activities.info.InfoActivity;
+import es.unican.movies.common.ISharedPreferences;
+import es.unican.movies.common.SharedPreferencesImpl;
 import es.unican.movies.model.Movie;
 import es.unican.movies.service.IMoviesRepository;
 
@@ -42,6 +44,8 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     @Inject
     IMoviesRepository repository;
 
+    public ISharedPreferences sharedPreferences;
+
     /**
      * Reference to the ListView that shows the list of movies
      */
@@ -61,6 +65,8 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         // instantiate presenter, let it take control
         presenter = new MainPresenter(repository);
         presenter.init(this);
+
+        sharedPreferences = new SharedPreferencesImpl(this);
     }
 
     @Override
@@ -102,7 +108,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
     @Override
     public void showMovies(List<Movie> movies) {
-        MovieAdapter adapter = new MovieAdapter(this, movies);
+        MovieAdapter adapter = new MovieAdapter(this, movies, sharedPreferences);
         lvMovies.setAdapter(adapter);
     }
 
