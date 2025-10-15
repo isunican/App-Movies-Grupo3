@@ -8,10 +8,12 @@ import static org.mockito.Mockito.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import es.unican.movies.activities.main.IMainContract;
+import es.unican.movies.activities.main.MainPresenter;
 import es.unican.movies.model.Movie;
 import es.unican.movies.service.IMoviesRepository;
 
-public class MainPresenterTest {
+public class DetailsPresenterTest {
 
     private IMainContract.View viewMock;
     private IMoviesRepository repositoryMock;

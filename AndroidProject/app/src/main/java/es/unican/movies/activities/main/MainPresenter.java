@@ -17,6 +17,7 @@ public class MainPresenter implements IMainContract.Presenter {
         this.repository = repository;
     }
 
+
     @Override
     public void init(IMainContract.View view) {
         this.view = view;
