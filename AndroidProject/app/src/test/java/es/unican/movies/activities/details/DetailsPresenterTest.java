@@ -24,7 +24,7 @@ public class DetailsPresenterTest {
         viewMock = mock(IMainContract.View.class);
         repositoryMock = mock(IMoviesRepository.class);
         when(viewMock.getMoviesRepository()).thenReturn(repositoryMock);
-        presenter = new MainPresenter(repositoryMock);
+        presenter = new MainPresenter();
         presenter.init(viewMock);
     }
 
@@ -79,7 +79,7 @@ public class DetailsPresenterTest {
         movie.setRuntime(120);
         movie.setVoteAverage(Double.NaN);
         movie.setVoteCount(8);
-        MainPresenter presenter = new MainPresenter(repositoryMock);
+        MainPresenter presenter = new MainPresenter();
         presenter.init(viewMock);
 
         presenter.onItemClicked(movie);
@@ -97,7 +97,7 @@ public class DetailsPresenterTest {
         movie.setRuntime(120);
         movie.setVoteAverage(-5.0);
         movie.setVoteCount(7);
-        MainPresenter presenter = new MainPresenter(repositoryMock);
+        MainPresenter presenter = new MainPresenter();
         presenter.init(viewMock);
 
         presenter.onItemClicked(movie);
