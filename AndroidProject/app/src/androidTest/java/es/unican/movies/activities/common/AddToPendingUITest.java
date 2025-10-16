@@ -66,7 +66,7 @@ public class AddToPendingUITest {
      */
     @Test
     public void addToPending_success() {
-        // a. El usuario ve la lista de películas y pulsa "Añadir a pendientes" en "Juego sucio"
+        // a. El usuario ve la lista de películas y pulsa "Añadir a pendientes"
         onData(anything())
                 .inAdapterView(withId(R.id.lvMovies))
                 .atPosition(1)
@@ -77,7 +77,6 @@ public class AddToPendingUITest {
                 .check(matches(isDisplayed()));
 
         // c. El botón "Añadir a pendientes" desaparece
-        // (Esto puede variar si tu layout cambia de texto o icono)
         onView(withId(R.id.ibFavorite)).check(matches(isDisplayed()));
 
         // d. El usuario entra a la vista detallada de la película
@@ -93,6 +92,29 @@ public class AddToPendingUITest {
      */
     @Test
     public void addToPending_persistenceError() {
+        // a. El usuario ve la lista de películas y pulsa "Añadir a pendientes"
+        onData(anything())
+                .inAdapterView(withId(R.id.lvMovies))
+                .atPosition(1)
+                .onChildView(withId(R.id.ibFavorite))
+                .perform(click());
 
+        // b. Aparece un mensaje de error en pantalla
+        onView(withText("Ha ocurrido un error. Por favor, vuelve a intentarlo"))
+                .check(matches(isDisplayed()));
+
+        // c. El botón "Añadir a pendientes" sigue visible
+        onView(withId(R.id.ibFavorite))
+                .check(matches(isDisplayed()));
+
+        // d. El usuario entra a la vista detallada de la película
+        onData(anything())
+                .inAdapterView(withId(R.id.lvMovies))
+                .atPosition(1)
+                .perform(click());
+
+        // e. En la vista detallada NO debe haber una insignia "Pendiente"
+        onView(withText("Pendiente"))
+                .check(doesNotExist());
     }
 }
