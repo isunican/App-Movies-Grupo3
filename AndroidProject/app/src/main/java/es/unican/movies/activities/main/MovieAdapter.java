@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -79,6 +80,7 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
                 sharedPreferences.savePendingMovie(movie);
                 ibPending.setVisibility(View.GONE);
                 notifyDataSetChanged();
+                Toast.makeText(v.getContext(), "Película guardada correctamente en Pendientes", Toast.LENGTH_SHORT).show();
             });
         }
 
