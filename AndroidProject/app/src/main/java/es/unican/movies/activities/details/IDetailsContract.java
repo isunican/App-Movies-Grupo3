@@ -1,6 +1,7 @@
 package es.unican.movies.activities.details;
 
-import es.unican.movies.activities.main.IMainContract;
+import es.unican.movies.model.Movie;
+import es.unican.movies.common.ISharedPreferences;
 
 public interface IDetailsContract {
 
@@ -21,5 +22,11 @@ public interface IDetailsContract {
          * Only the Presenter should call this method
          */
         public void init();
+
+        public ISharedPreferences getSharedPreferences();
+
+        public Movie getMovie();
+
+        public void hidePendingBadge();
     }
 }
