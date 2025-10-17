@@ -63,21 +63,21 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
         TextView tvTitle = convertView.findViewById(R.id.tvTitle);
         tvTitle.setText(movie.getTitle());
 
-        // interaccion con favoritos
-        ImageButton ibFavorite = convertView.findViewById(R.id.ibPending);
-        boolean isFavorite = sharedPreferences.movieIsPending(movie.getId());
+        // interaccion con pendientes
+        ImageButton ibPending = convertView.findViewById(R.id.ibPending);
+        boolean isPending = sharedPreferences.movieIsPending(movie.getId());
 
-        if (isFavorite) {
-            // If its already in favorites, we do not show the button
-            ibFavorite.setVisibility(View.GONE);
+        if (isPending) {
+            // If its already in pending, we do not show the button
+            ibPending.setVisibility(View.GONE);
         } else {
-            // If its not in favorites, we show the button
-            ibFavorite.setVisibility(View.VISIBLE);
+            // If its not in pending, we show the button
+            ibPending.setVisibility(View.VISIBLE);
 
-            // Listener linked to the button to add the film clicked to favorites
-            ibFavorite.setOnClickListener( v -> {
+            // Listener linked to the button to add the film clicked to pending
+            ibPending.setOnClickListener( v -> {
                 sharedPreferences.savePendingMovie(movie);
-                ibFavorite.setVisibility(View.GONE);
+                ibPending.setVisibility(View.GONE);
                 notifyDataSetChanged();
             });
         }

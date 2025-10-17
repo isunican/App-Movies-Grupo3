@@ -70,14 +70,14 @@ public class AddToPendingUITest {
         onData(anything())
                 .inAdapterView(withId(R.id.lvMovies))
                 .atPosition(1)
-                .onChildView(withId(R.id.ibFavorite))
+                .onChildView(withId(R.id.ibPending))
                 .perform(click());
         // b. Aparece un mensaje de confirmación
         onView(withText("Película guardada correctamente en Pendientes"))
                 .check(matches(isDisplayed()));
 
         // c. El botón "Añadir a pendientes" desaparece
-        onView(withId(R.id.ibFavorite)).check(matches(isDisplayed()));
+        onView(withId(R.id.ibPending)).check(matches(isDisplayed()));
 
         // d. El usuario entra a la vista detallada de la película
         onData(anything()).inAdapterView(withId(R.id.lvMovies)).atPosition(1).perform(click());
@@ -96,7 +96,7 @@ public class AddToPendingUITest {
         onData(anything())
                 .inAdapterView(withId(R.id.lvMovies))
                 .atPosition(1)
-                .onChildView(withId(R.id.ibFavorite))
+                .onChildView(withId(R.id.ibPending))
                 .perform(click());
 
         // b. Aparece un mensaje de error en pantalla
@@ -104,7 +104,7 @@ public class AddToPendingUITest {
                 .check(matches(isDisplayed()));
 
         // c. El botón "Añadir a pendientes" sigue visible
-        onView(withId(R.id.ibFavorite))
+        onView(withId(R.id.ibPending))
                 .check(matches(isDisplayed()));
 
         // d. El usuario entra a la vista detallada de la película
