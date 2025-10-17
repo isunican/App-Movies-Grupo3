@@ -33,7 +33,7 @@
         tools:text="El titulo de la Peli" />
 
     <ImageButton
-        android:id="@+id/ibFavorite"
+        android:id="@+id/ibPending"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="220dp"
@@ -46,6 +46,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/ivPoster"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/emptyheart" />
+        app:srcCompat="@drawable/pendingsymbol" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

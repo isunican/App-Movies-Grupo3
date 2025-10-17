@@ -64,7 +64,7 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
         tvTitle.setText(movie.getTitle());
 
         // interaccion con favoritos
-        ImageButton ibFavorite = convertView.findViewById(R.id.ibFavorite);
+        ImageButton ibFavorite = convertView.findViewById(R.id.ibPending);
         boolean isFavorite = sharedPreferences.movieIsPending(movie.getId());
 
         if (isFavorite) {
