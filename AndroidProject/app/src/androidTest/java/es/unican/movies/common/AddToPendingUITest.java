@@ -1,4 +1,4 @@
-package es.unican.movies.activities.common;
+package es.unican.movies.common;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.onData;
