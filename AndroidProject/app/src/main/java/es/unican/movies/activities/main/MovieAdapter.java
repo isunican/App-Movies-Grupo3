@@ -1,6 +1,7 @@
 package es.unican.movies.activities.main;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,11 +77,16 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
             ibPending.setVisibility(View.VISIBLE);
 
             // Listener linked to the button to add the film clicked to pending
-            ibPending.setOnClickListener( v -> {
-                sharedPreferences.savePendingMovie(movie);
+            ibPending.setOnClickListener(v -> {
+                boolean persistenceResult = sharedPreferences.savePendingMovie(movie);
                 ibPending.setVisibility(View.GONE);
                 notifyDataSetChanged();
-                Toast.makeText(v.getContext(), "Película guardada correctamente en Pendientes", Toast.LENGTH_SHORT).show();
+                // if the new values were successfully written to persistent storage.
+                if (persistenceResult) {
+                    Toast.makeText(v.getContext(), "Película guardada correctamente en Pendientes", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(v.getContext(), "Ha ocurrido un error. Por favor, vuelve a intentarlo", Toast.LENGTH_LONG).show();
+                }
             });
         }
 

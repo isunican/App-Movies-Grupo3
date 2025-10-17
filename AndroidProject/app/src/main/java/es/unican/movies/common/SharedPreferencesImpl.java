@@ -2,6 +2,7 @@ package es.unican.movies.common;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -29,10 +30,11 @@ public class SharedPreferencesImpl implements ISharedPreferences {
     /**
      * Guarda una película completa como pendiente.
      * Usa el id como clave y guarda el objeto serializado a JSON.
+     * retorna true si la persistencia fue satisfactoria
      */
     @Override
-    public void savePendingMovie(Movie movie) {
+    public boolean savePendingMovie(Movie movie) {
         String json = gson.toJson(movie);
-        prefsPending.edit().putString(String.valueOf(movie.getId()), json).apply();
+        return prefsPending.edit().putString(String.valueOf(movie.getId()), json).commit();
     }
 }

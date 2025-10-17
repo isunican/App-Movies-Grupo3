@@ -6,6 +6,6 @@ public interface ISharedPreferences {
 
     public boolean movieIsPending(int movieId);
 
-    public void savePendingMovie(Movie movie);
+    public boolean savePendingMovie(Movie movie);
 
 }
