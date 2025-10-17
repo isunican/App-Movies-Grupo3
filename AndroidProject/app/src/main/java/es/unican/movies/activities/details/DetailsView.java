@@ -9,8 +9,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
+import org.w3c.dom.Text;
 
 import es.unican.movies.R;
+import es.unican.movies.common.ISharedPreferences;
+import es.unican.movies.common.SharedPreferencesImpl;
 import es.unican.movies.model.Movie;
 import es.unican.movies.service.EImageSize;
 import es.unican.movies.service.ITmdbApi;
@@ -32,8 +35,17 @@ public class DetailsView extends AppCompatActivity {
         assert movie != null;
         TextView tvTitle = findViewById(R.id.tvTitle);
         TextView tvId = findViewById(R.id.tvId);
+        TextView tvPendingStatus = findViewById(R.id.tvPendingStatus);
         tvTitle.setText(movie.getTitle());
         tvId.setText(String.valueOf(movie.getId()));
+
+        ISharedPreferences sharedPreferences = new SharedPreferencesImpl(this);
+
+        if (sharedPreferences.movieIsPending(movie.getId())) {
+            tvPendingStatus.setVisibility(TextView.VISIBLE);
+        } else {
+            tvPendingStatus.setVisibility(TextView.GONE);
+        }
 
         this.loadFields(movie);
     }
