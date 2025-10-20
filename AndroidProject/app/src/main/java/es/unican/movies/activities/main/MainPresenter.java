@@ -11,11 +11,7 @@ import es.unican.movies.service.IMoviesRepository;
 public class MainPresenter implements IMainContract.Presenter {
 
     IMainContract.View view;
-    private IMoviesRepository repository;
 
-    public MainPresenter(IMoviesRepository repository) {
-        this.repository = repository;
-    }
 
     @Override
     public void init(IMainContract.View view) {

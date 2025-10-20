@@ -8,7 +8,6 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
 import static org.hamcrest.CoreMatchers.anything;
 
 import android.content.Context;
@@ -29,7 +28,7 @@ import es.unican.movies.service.IMoviesRepository;
 
 @UninstallModules(RepositoriesModule.class)
 @HiltAndroidTest
-public class MovieDetailIntegrationTest {
+public class MovieDetailUITest {
 
     @Rule(order = 0)
     public HiltAndroidRule hiltRule = new HiltAndroidRule(this);
