@@ -24,8 +24,11 @@ import es.unican.movies.model.Movie;
 import es.unican.movies.service.EImageSize;
 import es.unican.movies.service.ITmdbApi;
 
+
 /**
- * Adapter for the list of movies.
+ * Adapter for displaying a list of movies in a ListView.
+ * Handles the binding of movie data to the UI elements in each list item,
+ * including poster, title, and pending status button.
  */
 public class MovieAdapter extends ArrayAdapter<Movie> {
 
@@ -38,7 +41,14 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
 
     private final ISharedPreferences sharedPreferences;
 
-    // Constructor without OnItemClickListener, which is now handled by the ListView itself
+
+    /**
+     * Constructs a new MovieAdapter.
+     *
+     * @param context the context in which the adapter is running
+     * @param movieList the list of movies to display
+     * @param sharedPreferences the shared preferences for managing pending movies
+     */
     protected MovieAdapter(@NonNull Context context, @NonNull List<Movie> movieList, ISharedPreferences sharedPreferences) {
         super(context, R.layout.activity_main_movie_item, movieList);
         this.context = context;
@@ -46,6 +56,17 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
         this.sharedPreferences =  sharedPreferences;
     }
 
+
+    /**
+     * Returns the view for a specific position in the list.
+     * Binds the movie data to the UI elements, handles poster loading,
+     * title display, and pending status button logic.
+     *
+     * @param position the position of the item within the adapter's data set
+     * @param convertView the old view to reuse, if possible
+     * @param parent the parent that this view will eventually be attached to
+     * @return the view corresponding to the data at the specified position
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -93,11 +114,22 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
         return convertView;
     }
 
+
+    /**
+     * Returns the number of movies in the adapter.
+     * @return the size of the movie list
+     */
     @Override
     public int getCount() {
         return movieList.size();
     }
 
+
+    /**
+     * Returns the movie at the specified position.
+     * @param position the position of the item
+     * @return the movie at the given position
+     */
     @Nullable
     @Override
     public Movie getItem(int position) {
