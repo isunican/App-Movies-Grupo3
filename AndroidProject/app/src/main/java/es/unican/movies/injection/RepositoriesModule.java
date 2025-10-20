@@ -30,9 +30,4 @@ public abstract class RepositoriesModule {
         return MoviesRepository.INSTANCE;
     }
 
-    @Provides
-    public static ISharedPreferences provideSharedPreferences(@ApplicationContext Context context) {
-        return new SharedPreferencesImpl(context);
-    }
-
 }

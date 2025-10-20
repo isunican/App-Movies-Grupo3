@@ -13,4 +13,14 @@ public class SharedPreferencesFake implements ISharedPreferences {
     public boolean savePendingMovie(Movie movie) {
         return false;
     }
+
+    @Override
+    public boolean movieIsFavourite(int movieId) {
+        return false;
+    }
+
+    @Override
+    public boolean saveFavouriteMovie(Movie movie) {
+        return false;
+    }
 }

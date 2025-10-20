@@ -31,6 +31,7 @@ import dagger.hilt.android.testing.UninstallModules;
 import es.unican.movies.R;
 import es.unican.movies.common.ISharedPreferences;
 import es.unican.movies.injection.RepositoriesModule;
+import es.unican.movies.injection.SharedPreferencesModule;
 import es.unican.movies.service.IMoviesRepository;
 import es.unican.movies.utils.MockRepositories;
 

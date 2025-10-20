@@ -33,10 +33,11 @@ import es.unican.movies.R;
 import es.unican.movies.common.ISharedPreferences;
 import es.unican.movies.common.SharedPreferencesFake;
 import es.unican.movies.injection.RepositoriesModule;
+import es.unican.movies.injection.SharedPreferencesModule;
 import es.unican.movies.service.IMoviesRepository;
 import es.unican.movies.utils.MockRepositories;
 
-@UninstallModules(RepositoriesModule.class)
+@UninstallModules({RepositoriesModule.class, SharedPreferencesModule.class})
 @HiltAndroidTest
 public class AddToPendingFailUITest {
 
