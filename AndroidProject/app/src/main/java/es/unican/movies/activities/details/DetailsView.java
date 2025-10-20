@@ -85,6 +85,15 @@ public class DetailsView extends AppCompatActivity implements IDetailsContract.V
     }
 
     /**
+     * Hides the favourite badge in the UI if the movie is not favourite.
+     */
+    @Override
+    public void hideFavouriteBadge() {
+        TextView tvFavouriteStatus = findViewById(R.id.tvFavouriteStatus);
+        tvFavouriteStatus.setVisibility(TextView.GONE);
+    }
+
+    /**
      * Retrieve movie details fields and populate them with the correct data.
      * @param movie the movie whose details are to be displayed
      */
