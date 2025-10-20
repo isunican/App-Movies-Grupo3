@@ -97,7 +97,7 @@ public class Movie {
         if (Double.isNaN(voteAverage) || voteAverage < 0 || voteCount < 0) {
             return Double.NaN;
         }
-        double normalizedCount = 2 * Math.log10(1 + voteCount);
+        Double normalizedCount = 2 * Math.log10(1 + voteCount);
         return (voteAverage + normalizedCount) / 2;
     }
 
