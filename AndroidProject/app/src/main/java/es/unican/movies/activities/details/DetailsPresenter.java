@@ -15,7 +15,8 @@ public class DetailsPresenter implements IDetailsContract.Presenter {
 
     /**
      * Initializes the presenter with the given view, sets up the UI, and manages
-     * the pending badge visibility based on the movie's pending status.
+     * the pending and favourite badge visibility based on the movie's pending
+     * and favourite status.
      * @param view the view to be controlled by this presenter
      */
     @Override
@@ -27,9 +28,14 @@ public class DetailsPresenter implements IDetailsContract.Presenter {
 
         Movie movie = this.view.getMovie();
         boolean isMoviePending = sharedPreferences.movieIsPending(movie.getId());
+        boolean isMovieFavourite = sharedPreferences.movieIsFavourite(movie.getId());
 
         if (!isMoviePending) {
             this.view.hidePendingBadge();
+        }
+
+        if (!isMovieFavourite) {
+            this.view.hideFavouriteBadge();
         }
     }
 }

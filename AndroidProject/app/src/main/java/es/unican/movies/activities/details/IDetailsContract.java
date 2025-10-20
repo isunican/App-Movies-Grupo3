@@ -50,5 +50,10 @@ public interface IDetailsContract {
          * Hides the pending badge in the UI if the movie is not pending.
          */
         public void hidePendingBadge();
+
+        /**
+         * Hides the favourite badge in the UI if the movie is not favourite.
+         */
+        public void hideFavouriteBadge();
     }
 }
