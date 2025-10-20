@@ -1,9 +1,14 @@
 package es.unican.movies.injection;
 
+import android.content.Context;
+
 import dagger.Module;
 import dagger.Provides;
 import dagger.hilt.InstallIn;
 import dagger.hilt.android.components.ActivityComponent;
+import dagger.hilt.android.qualifiers.ApplicationContext;
+import es.unican.movies.common.ISharedPreferences;
+import es.unican.movies.common.SharedPreferencesImpl;
 import es.unican.movies.service.IMoviesRepository;
 import es.unican.movies.service.MoviesRepository;
 
@@ -23,6 +28,11 @@ public abstract class RepositoriesModule {
     @Provides
     public static IMoviesRepository provideRepository() {
         return MoviesRepository.INSTANCE;
+    }
+
+    @Provides
+    public static ISharedPreferences provideSharedPreferences(@ApplicationContext Context context) {
+        return new SharedPreferencesImpl(context);
     }
 
 }
