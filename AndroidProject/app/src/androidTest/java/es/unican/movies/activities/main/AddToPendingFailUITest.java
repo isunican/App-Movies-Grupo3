@@ -75,20 +75,23 @@ public class AddToPendingFailUITest {
          .onChildView(withId(R.id.ibPending))
          .perform(click());
 
-         // b. El botón "Añadir a pendientes" sigue visible en ese ítem
+         // b. Aparece un Toast indicando que ha habido un error al guardar
+         //no se realiza por errores con AndroidStudio emulador
+
+         // c. El botón "Añadir a pendientes" sigue visible en ese ítem
          onData(anything())
          .inAdapterView(withId(R.id.lvMovies))
          .atPosition(1)
          .onChildView(withId(R.id.ibPending))
          .check(matches(isDisplayed()));
 
-         // c. El usuario entra a la vista detallada de la película
+         // d. El usuario entra a la vista detallada de la película
          onData(anything())
          .inAdapterView(withId(R.id.lvMovies))
          .atPosition(1)
          .perform(click());
 
-         // d. En la vista detallada NO debe haber una insignia "Pendiente"
+         // e. En la vista detallada NO debe haber una insignia "Pendiente"
          onView(withId(R.id.tvPendingStatus))
                  .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
      }
