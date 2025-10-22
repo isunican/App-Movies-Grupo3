@@ -46,6 +46,8 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     /**
      * Repository that can be used to retrieve movies or series.
      */
+
+    @Inject
     IMoviesRepository repository;
 
 
@@ -60,11 +62,6 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
      * Reference to the ListView that shows the list of movies.
      */
     private ListView lvMovies;
-
-    @Inject
-    public MainView(IMoviesRepository repository) {
-        this.repository = repository;
-    }
 
 
     /**
