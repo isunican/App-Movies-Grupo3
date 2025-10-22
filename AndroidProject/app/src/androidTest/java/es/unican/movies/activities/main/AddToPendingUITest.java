@@ -65,6 +65,13 @@ public class AddToPendingUITest {
         activityRule.getScenario().onActivity(activity -> decorView = activity.getWindow().getDecorView());
     }
 
+    /*
+    private void waitForToast(long ms) {
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException ignored) { }
+    }*/
+
     /**
      * Success case:
      * The user successfully adds a movie to "Pending".
@@ -79,7 +86,13 @@ public class AddToPendingUITest {
                 .perform(click());
 
         // b. Aparece un Toast indicando que ha habido un error al guardar
-        //no se realiza por errores con AndroidStudio emulador
+        // Esperar un momento para que el Toast aparezca
+        /*
+        waitForToast(1500);
+        onView(withText("Película guardada correctamente en Pendientes"))
+                .inRoot(withDecorView(not(is(decorView))))
+                .check(matches(isDisplayed()));
+        */
 
         // c. El botón "Añadir a pendientes" del ítem pulsado desaparece
         onData(anything())

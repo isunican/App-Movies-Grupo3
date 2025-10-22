@@ -62,6 +62,12 @@ public class AddToPendingFailUITest {
     // decorView de la activity para localizar Toasts
     private View decorView;
 
+    /*private void waitForToast(long ms) {
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException ignored) { }
+    }*/
+
     /**
      * Persistence error case:
      * Simulates an error when trying to load or save data.
@@ -76,7 +82,14 @@ public class AddToPendingFailUITest {
          .perform(click());
 
          // b. Aparece un Toast indicando que ha habido un error al guardar
-         //no se realiza por errores con AndroidStudio emulador
+         //Esperar un momento para que el Toast aparezca
+         /*
+         waitForToast(1500);
+         onView(withText("Ha ocurrido un error. Por favor, vuelve a intentarlo"))
+                 .inRoot(withDecorView(not(is(decorView))))
+                 .check(matches(isDisplayed()));
+        */
+
 
          // c. El botón "Añadir a pendientes" sigue visible en ese ítem
          onData(anything())
