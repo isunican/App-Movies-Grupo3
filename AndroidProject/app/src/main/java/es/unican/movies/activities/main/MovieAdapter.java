@@ -95,6 +95,15 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
         return convertView;
     }
 
+    /**
+     * Sets up the "pending" button for the specified list item view.
+     * Adjusts visibility based on the current pending state, assigns a click listener
+     * that attempts to persist the movie as pending, hides the button when saved,
+     * notifies the adapter of the change, and shows a Toast with the operation result.
+     *
+     * @param convertView the item view that contains the button and other UI elements
+     * @param movie       the Movie associated with this row (used for persistence by id)
+     */
     private void setupPendingButton(@NonNull View convertView, @NonNull Movie movie) {
         ImageButton ibPending = convertView.findViewById(R.id.ibPending);
         boolean isPending = sharedPreferences.movieIsPending(movie.getId());
@@ -117,6 +126,15 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
         }
     }
 
+    /**
+     * Sets up the "favourite" button for the specified list item view.
+     * Adjusts visibility based on the current favourite state, assigns a click listener
+     * that attempts to persist the movie as favourite, hides the button when saved,
+     * notifies the adapter of the change, and shows a Toast with the operation result.
+     *
+     * @param convertView the item view that contains the button and other UI elements
+     * @param movie       the Movie associated with this row (used for persistence by id)
+     */
     private void setupFavouriteButton(@NonNull View convertView, @NonNull Movie movie) {
         ImageButton ibFavourite = convertView.findViewById(R.id.ibFavourite);
         boolean isFavourite = sharedPreferences.movieIsFavourite(movie.getId());
