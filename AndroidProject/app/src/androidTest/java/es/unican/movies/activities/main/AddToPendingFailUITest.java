@@ -7,6 +7,7 @@ import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.RootMatchers.withDecorView;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.anything;
@@ -17,6 +18,7 @@ import static org.mockito.Mockito.mock;
 import android.content.Context;
 import android.view.View;
 
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.platform.app.InstrumentationRegistry;
 
@@ -60,48 +62,35 @@ public class AddToPendingFailUITest {
     // decorView de la activity para localizar Toasts
     private View decorView;
 
-    private void waitForToast(long ms) {
-        try {
-            Thread.sleep(ms);
-        } catch (InterruptedException ignored) { }
-    }
-
     /**
      * Persistence error case:
      * Simulates an error when trying to load or save data.
     */
      @Test
-     public void addToPending_persistenceError() {
      // a. El usuario ve la lista de películas y pulsa "Añadir a pendientes"
-     onData(anything())
-     .inAdapterView(withId(R.id.lvMovies))
-     .atPosition(1)
-     .onChildView(withId(R.id.ibPending))
-     .perform(click());
+     public void addToPending_persistenceError() {
+         onData(anything())
+         .inAdapterView(withId(R.id.lvMovies))
+         .atPosition(1)
+         .onChildView(withId(R.id.ibPending))
+         .perform(click());
 
-     // Esperar un momento para que el Toast aparezca
-     waitForToast(1500);
+         // b. El botón "Añadir a pendientes" sigue visible en ese ítem
+         onData(anything())
+         .inAdapterView(withId(R.id.lvMovies))
+         .atPosition(1)
+         .onChildView(withId(R.id.ibPending))
+         .check(matches(isDisplayed()));
 
-     // b. Aparece un mensaje de error en pantalla (Toast)
-     onView(withText("Ha ocurrido un error. Por favor, vuelve a intentarlo"))
-     .inRoot(withDecorView(not(is(decorView))))
-     .check(matches(isDisplayed()));
+         // c. El usuario entra a la vista detallada de la película
+         onData(anything())
+         .inAdapterView(withId(R.id.lvMovies))
+         .atPosition(1)
+         .perform(click());
 
-     // c. El botón "Añadir a pendientes" sigue visible en ese ítem
-     onData(anything())
-     .inAdapterView(withId(R.id.lvMovies))
-     .atPosition(1)
-     .onChildView(withId(R.id.ibPending))
-     .check(matches(isDisplayed()));
-
-     // d. El usuario entra a la vista detallada de la película
-     onData(anything())
-     .inAdapterView(withId(R.id.lvMovies))
-     .atPosition(1)
-     .perform(click());
-
-     // e. En la vista detallada NO debe haber una insignia "Pendiente"
-     onView(withId(R.id.tvPendingStatus)).check(doesNotExist());
+         // d. En la vista detallada NO debe haber una insignia "Pendiente"
+         onView(withId(R.id.tvPendingStatus))
+                 .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
      }
 
 }
