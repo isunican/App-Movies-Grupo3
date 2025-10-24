@@ -86,32 +86,76 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
         TextView tvTitle = convertView.findViewById(R.id.tvTitle);
         tvTitle.setText(movie.getTitle());
 
-        // interaccion con pendientes
+        // Delegar la configuración del botón de pendientes a un metodo
+        setupPendingButton(convertView, movie);
+
+        // Delegar la configuración del botón de favoritos a un metodo
+        setupFavouriteButton(convertView, movie);
+
+        return convertView;
+    }
+
+    /**
+     * Sets up the "pending" button for the specified list item view.
+     * Adjusts visibility based on the current pending state, assigns a click listener
+     * that attempts to persist the movie as pending, hides the button when saved,
+     * notifies the adapter of the change, and shows a Toast with the operation result.
+     *
+     * @param convertView the item view that contains the button and other UI elements
+     * @param movie       the Movie associated with this row (used for persistence by id)
+     */
+    private void setupPendingButton(@NonNull View convertView, @NonNull Movie movie) {
         ImageButton ibPending = convertView.findViewById(R.id.ibPending);
         boolean isPending = sharedPreferences.movieIsPending(movie.getId());
 
         if (isPending) {
-            // If its already in pending, we do not show the button
             ibPending.setVisibility(View.GONE);
         } else {
-            // If its not in pending, we show the button
             ibPending.setVisibility(View.VISIBLE);
-
-            // Listener linked to the button to add the film clicked to pending
             ibPending.setOnClickListener(v -> {
                 boolean persistenceResult = sharedPreferences.savePendingMovie(movie);
                 ibPending.setVisibility(View.GONE);
                 notifyDataSetChanged();
-                // if the new values were successfully written to persistent storage.
+                Context ctx = v.getContext();
                 if (persistenceResult) {
-                    Toast.makeText(v.getContext(), "Película guardada correctamente en Pendientes", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ctx, "Película guardada correctamente en Pendientes", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(v.getContext(), "Ha ocurrido un error. Por favor, vuelve a intentarlo", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ctx, "Ha ocurrido un error. Por favor, vuelve a intentarlo", Toast.LENGTH_LONG).show();
                 }
             });
         }
+    }
 
-        return convertView;
+    /**
+     * Sets up the "favourite" button for the specified list item view.
+     * Adjusts visibility based on the current favourite state, assigns a click listener
+     * that attempts to persist the movie as favourite, hides the button when saved,
+     * notifies the adapter of the change, and shows a Toast with the operation result.
+     *
+     * @param convertView the item view that contains the button and other UI elements
+     * @param movie       the Movie associated with this row (used for persistence by id)
+     */
+    private void setupFavouriteButton(@NonNull View convertView, @NonNull Movie movie) {
+        ImageButton ibFavourite = convertView.findViewById(R.id.ibFavourite);
+        boolean isFavourite = sharedPreferences.movieIsFavourite(movie.getId());
+
+        if (isFavourite) {
+            ibFavourite.setVisibility(View.GONE);
+            ibFavourite.setOnClickListener(null); // evitar listeners residuales
+        } else {
+            ibFavourite.setVisibility(View.VISIBLE);
+            ibFavourite.setOnClickListener(v -> {
+                boolean persistenceResult = sharedPreferences.saveFavouriteMovie(movie);
+                ibFavourite.setVisibility(View.GONE);
+                notifyDataSetChanged();
+                Context ctx = v.getContext();
+                if (persistenceResult) {
+                    Toast.makeText(ctx, "Película guardada correctamente en Favoritos", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(ctx, "Ha ocurrido un error. Por favor, vuelve a intentarlo", Toast.LENGTH_LONG).show();
+                }
+            });
+        }
     }
 
 

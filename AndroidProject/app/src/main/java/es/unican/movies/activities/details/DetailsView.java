@@ -47,7 +47,7 @@ public class DetailsView extends AppCompatActivity implements IDetailsContract.V
 
         // Create presenter
         this.presenter = new DetailsPresenter();
-        sharedPreferences = new SharedPreferencesImpl(this);
+        this.sharedPreferences = new SharedPreferencesImpl(this);
 
         // Get movie
         this.movie = Parcels.unwrap(getIntent().getExtras().getParcelable(INTENT_MOVIE));
@@ -82,6 +82,15 @@ public class DetailsView extends AppCompatActivity implements IDetailsContract.V
     public void hidePendingBadge() {
         TextView tvPendingStatus = findViewById(R.id.tvPendingStatus);
         tvPendingStatus.setVisibility(TextView.GONE);
+    }
+
+    /**
+     * Hides the favourite badge in the UI if the movie is not favourite.
+     */
+    @Override
+    public void hideFavouriteBadge() {
+        TextView tvFavouriteStatus = findViewById(R.id.tvFavouriteStatus);
+        tvFavouriteStatus.setVisibility(TextView.GONE);
     }
 
     /**

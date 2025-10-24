@@ -46,6 +46,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     /**
      * Repository that can be used to retrieve movies or series.
      */
+
     @Inject
     IMoviesRepository repository;
 
@@ -53,6 +54,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     /**
      * Shared preferences for managing persistent movie data.
      */
+    @Inject
     public ISharedPreferences sharedPreferences;
 
 
@@ -79,7 +81,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
         // instantiate presenter, let it take control
         presenter = new MainPresenter();
-        sharedPreferences = new SharedPreferencesImpl(this);
+        // sharedPreferences = new SharedPreferencesImpl(this);
         presenter.init(this);
     }
 
