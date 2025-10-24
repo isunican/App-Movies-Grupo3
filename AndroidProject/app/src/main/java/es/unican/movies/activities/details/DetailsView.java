@@ -47,7 +47,7 @@ public class DetailsView extends AppCompatActivity implements IDetailsContract.V
 
         // Create presenter
         this.presenter = new DetailsPresenter();
-        sharedPreferences = new SharedPreferencesImpl(this);
+        this.sharedPreferences = new SharedPreferencesImpl(this);
 
         // Get movie
         this.movie = Parcels.unwrap(getIntent().getExtras().getParcelable(INTENT_MOVIE));
