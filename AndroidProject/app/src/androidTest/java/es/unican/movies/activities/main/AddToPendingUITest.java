@@ -59,6 +59,13 @@ public class AddToPendingUITest {
         activityRule.getScenario().onActivity(activity -> decorView = activity.getWindow().getDecorView());
     }
 
+    /*
+    private void waitForToast(long ms) {
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException ignored) { }
+    }*/
+
     /**
      * Success case:
      * The user successfully adds a movie to "Pending".
@@ -72,17 +79,26 @@ public class AddToPendingUITest {
                 .onChildView(withId(R.id.ibPending))
                 .perform(click());
 
-        // b. El botón "Añadir a pendientes" del ítem pulsado desaparece
+        // b. Aparece un Toast indicando que ha habido un error al guardar
+        // Esperar un momento para que el Toast aparezca
+        /*
+        waitForToast(1500);
+        onView(withText("Película guardada correctamente en Pendientes"))
+                .inRoot(withDecorView(not(is(decorView))))
+                .check(matches(isDisplayed()));
+        */
+
+        // c. El botón "Añadir a pendientes" del ítem pulsado desaparece
         onData(anything())
                 .inAdapterView(withId(R.id.lvMovies))
                 .atPosition(1)
                 .onChildView(withId(R.id.ibPending))
                 .check(matches(not(isDisplayed())));
 
-        // c. El usuario entra a la vista detallada de la película
+        // d. El usuario entra a la vista detallada de la película
         onData(anything()).inAdapterView(withId(R.id.lvMovies)).atPosition(1).perform(click());
 
-        // d. En la vista detallada aparece la insignia "Pendiente"
+        // e. En la vista detallada aparece la insignia "Pendiente"
         onView(withId(R.id.tvPendingStatus)).check(matches(isDisplayed()));
     }
 }
