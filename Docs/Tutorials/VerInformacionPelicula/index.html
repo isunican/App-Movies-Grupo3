@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>521106 - Ver información detallada de una película</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <header>
+    <h1>521106 - Ver información detallada de una película</h1>
+  </header>
+
+  <main>
+    <section>
+  <h2>Descripción</h2>
+  <p>
+    Esta funcionalidad permite al usuario acceder a una <strong>ficha detallada</strong> de una película 
+    seleccionada desde la lista principal. En esta vista se muestra información relevante como la 
+    <strong>sinopsis</strong>, <strong>reparto</strong>, <strong>duración</strong>, <strong>género</strong>, 
+    <strong>año de estreno</strong> y <strong>calificación</strong>, ofreciendo una visión completa que ayuda 
+    al usuario a decidir si desea verla en ese momento o más adelante.
+  </p>
+</section>
+
+    <section>
+      <h2>🎬 Interfaz de detalles</h2>
+      <p>
+        Si desea obtener información más completa sobre una película, solo tiene que <strong>seleccionarla desde la lista principal</strong>. 
+        Al hacerlo, la aplicación le redirigirá a una <strong>pantalla de detalles</strong>, donde se muestra toda la información relacionada 
+        con el título elegido, tal como se observa a continuación.
+      </p>
+
+      <p>
+        En la parte superior izquierda de esta interfaz encontrará una <strong>flecha de retroceso</strong>, que le permitirá 
+        <strong>volver al menú principal</strong>, en caso de que desee consultar otra película o haya ingresado por error en una distinta.
+      </p>
+
+      <p>
+        En esta vista detallada, podrá consultar información relevante de la película, como su <strong>título</strong>, 
+        <strong>año de estreno</strong>, <strong>género</strong>, <strong>duración</strong>, <strong>reparto</strong> y <strong>sinopsis</strong>. 
+        Además, se muestra la <strong>puntuación media</strong> junto con una <strong>puntuación sumaria</strong>, 
+        la cual se calcula automáticamente a partir de los datos disponibles y permite al usuario obtener una valoración general de la película.
+      </p>
+    </section>
+
+    <!-- Contenedor flexible para imagen y video en paralelo -->
+      <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-top: 1.5rem;">
+        <figure style="flex: 1; min-width: 250px; text-align: center;">
+          <img src="verdetalla.png" alt="-" style="max-width: 50%; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
+          <figcaption>Figura 1. Interfaz de vista detallada de pelicula.</figcaption>
+        </figure>
+
+        <figure style="flex: 1; min-width: 250px; text-align: center;">
+          <video controls style="max-width: 100%; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
+            <source src="VerDetalles ‐ Hecho con Clipchamp.mp4" type="video/mp4">
+            Su navegador no soporta la reproducción de video.
+          </video>
+          <figcaption>Figura 2. Video demostrativo de la interfaz de vista detallada de pelicula.</figcaption>
+        </figure>
+      </div>
+
+
+
+    <p><a href="../index.html">← Volver al índice</a></p>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 - Especificación de Requisitos | FILMEON</p>
+  </footer>
+</body>
+</html>

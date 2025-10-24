@@ -37,4 +37,24 @@ public class MockRepositories {
         return mock;
     }
 
+    /**
+     * Create a mock repository that simulates a persistence error (e.g., when saving a movie fails)
+     *
+     * @param context application context
+     * @param jsonId  json raw file id
+     * @return mock repository that always triggers onFailure for persistence operations
+     */
+    public static IMoviesRepository getFailingRepository(Context context, int jsonId) {
+        IMoviesRepository mock = mock(IMoviesRepository.class);
+
+        // Simula error en la petición de películas
+        doAnswer(invocation -> {
+            ICallback<List<Movie>> callback = invocation.getArgument(0);
+            callback.onFailure(new Exception("Error de persistencia simulado"));
+            return null;
+        }).when(mock).requestAggregateMovies(any(ICallback.class));
+
+        return mock;
+    }
+
 }

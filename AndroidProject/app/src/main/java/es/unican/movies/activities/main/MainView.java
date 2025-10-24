@@ -22,31 +22,52 @@ import dagger.hilt.android.AndroidEntryPoint;
 import es.unican.movies.R;
 import es.unican.movies.activities.details.DetailsView;
 import es.unican.movies.activities.info.InfoActivity;
+import es.unican.movies.common.ISharedPreferences;
+import es.unican.movies.common.SharedPreferencesImpl;
 import es.unican.movies.model.Movie;
 import es.unican.movies.service.IMoviesRepository;
 
+
 /**
  * Activity to show the list of movies.
+ * Implements the View in the MVP architecture for the main screen.
+ * Handles UI initialization, menu actions, and navigation to details and info screens.
  */
 @AndroidEntryPoint
 public class MainView extends AppCompatActivity implements IMainContract.View {
+
 
     /**
      * Presenter that will take control of this view.
      */
     private IMainContract.Presenter presenter;
 
+
     /**
      * Repository that can be used to retrieve movies or series.
      */
+
     @Inject
     IMoviesRepository repository;
 
-    /**
-     * Reference to the ListView that shows the list of movies
-     */
-    private ListView lvMovies; // Added ListView member
 
+    /**
+     * Shared preferences for managing persistent movie data.
+     */
+    @Inject
+    public ISharedPreferences sharedPreferences;
+
+
+    /**
+     * Reference to the ListView that shows the list of movies.
+     */
+    private ListView lvMovies;
+
+
+    /**
+     * Called when the activity is starting. Sets up the toolbar, presenter, and shared preferences.
+     * @param savedInstanceState If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in onSaveInstanceState(Bundle). Otherwise it is null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,9 +81,16 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
         // instantiate presenter, let it take control
         presenter = new MainPresenter();
+        // sharedPreferences = new SharedPreferencesImpl(this);
         presenter.init(this);
     }
 
+
+    /**
+     * Initializes the contents of the Activity's options menu.
+     * @param menu The options menu in which items are placed.
+     * @return true for the menu to be displayed; false otherwise
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
@@ -70,11 +98,12 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         return true;
     }
 
+
     /**
-     * This is called when an item in the action bar menu is selected.
+     * Called when an item in the action bar menu is selected.
+     * Handles navigation to the info screen.
      * @param item The menu item that was selected.
-     *
-     * @return true if we have handled the selection
+     * @return true if the selection was handled, false otherwise
      */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -86,6 +115,10 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         return super.onOptionsItemSelected(item);
     }
 
+
+    /**
+     * Initializes the view components and sets up the ListView item click listener.
+     */
     @Override
     public void init() {
         lvMovies = findViewById(R.id.lvMovies);
@@ -95,27 +128,51 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         });
     }
 
+
+    /**
+     * Returns the movies repository for retrieving movie data.
+     * @return the movies repository
+     */
     @Override
     public IMoviesRepository getMoviesRepository() {
         return repository;
     }
 
+
+    /**
+     * Displays the list of movies in the ListView using the MovieAdapter.
+     * @param movies the list of movies to display
+     */
     @Override
     public void showMovies(List<Movie> movies) {
-        MovieAdapter adapter = new MovieAdapter(this, movies);
+        MovieAdapter adapter = new MovieAdapter(this, movies, sharedPreferences);
         lvMovies.setAdapter(adapter);
     }
 
+
+    /**
+     * Shows a toast indicating the number of movies loaded successfully.
+     * @param movies the number of movies loaded
+     */
     @Override
     public void showLoadCorrect(int movies) {
         Toast.makeText(this, "Loaded " + movies + " movies", Toast.LENGTH_SHORT).show();
     }
 
+
+    /**
+     * Shows a toast indicating an error occurred while loading movies.
+     */
     @Override
     public void showLoadError() {
         Toast.makeText(this, "Error loading movies", Toast.LENGTH_SHORT).show();
     }
 
+
+    /**
+     * Navigates to the details screen for the selected movie.
+     * @param movie the movie to show details for
+     */
     @Override
     public void showMovieDetails(Movie movie) {
         Intent intent = new Intent(this, DetailsView.class);
@@ -123,6 +180,10 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         startActivity(intent);
     }
 
+
+    /**
+     * Navigates to the info activity screen.
+     */
     @Override
     public void showInfoActivity() {
         startActivity(new Intent(this, InfoActivity.class));

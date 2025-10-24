@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>521097 - Añadir película a pendientes</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <header>
+    <h1>521097 - Añadir película a pendientes</h1>
+  </header>
+
+  <main>
+    <section>
+      <h2>Descripción</h2>
+      <p>
+        Esta funcionalidad permite al usuario <strong>añadir una película a la lista de pendientes</strong> 
+        para verla en otro momento.
+        </p>
+    </section>
+
+    <section>
+      <h2>🎬 Interfaz de añadir a pendientes</h2>
+      <p>
+        En la interfaz principal, cada película cuenta con un botón identificado como 
+        <strong>“Pendientes”</strong>. Al pulsarlo, la aplicación añade automáticamente esa película 
+        a la lista de pendientes y muestra un <strong>toast de confirmación</strong> en la parte inferior 
+        de la pantalla.
+      </p>
+
+      <p>
+        Esta confirmación permite al usuario saber que la acción se ha completado correctamente sin 
+        necesidad de salir de la vista principal. Si el usuario desea comprobarlo manualmente, puede 
+        abrir la <strong>vista detallada</strong> de la película, donde se mostrará la etiqueta 
+        <strong>“PENDIENTE”</strong> como indicador de que el proceso se ha realizado con éxito.
+      </p>
+    </section>
+
+    <!-- Contenedor flexible para imagen y video en paralelo -->
+      <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-top: 1.5rem;">
+        <figure style="flex: 1; min-width: 250px; text-align: center;">
+          <img src="Captura de pantalla 2025-10-22 170013.png" alt="-" style="max-width: 50%; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
+          <figcaption>Figura 1. Interfaz de añadir pelicula a pendiente.</figcaption>
+        </figure>
+
+        <figure style="flex: 1; min-width: 250px; text-align: center;">
+          <video controls style="max-width: 100%; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
+            <source src="Pendientes ‐ Hecho con Clipchamp.mp4" type="video/mp4">
+            Su navegador no soporta la reproducción de video.
+          </video>
+          <figcaption>Figura 2. Video demostrativo de la interfaz de vista de añadir pelicula a pendiente.</figcaption>
+        </figure>
+      </div>
+
+
+    <p><a href="../index.html">← Volver al índice</a></p>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 - Especificación de Requisitos | FILMEON</p>
+  </footer>
+</body>
+</html>
