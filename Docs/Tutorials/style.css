@@ -1,0 +1,116 @@
+/* Quitar cualquier estilo de lista */
+ul, ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Estilos generales */
+body {
+  font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+  background: linear-gradient(135deg, #f0f4ff, #dbe8ff);
+  color: #333;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Encabezado */
+header {
+  background: linear-gradient(135deg, #004aad, #0077cc);
+  color: white;
+  text-align: center;
+  padding: 3rem 1rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+header h1 {
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+}
+
+header p {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* Contenido principal */
+main {
+  flex: 1;
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+main h2 {
+  color: #004aad;
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+}
+
+/* Contenedor de tarjetas */
+.card-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+/* Tarjetas individuales */
+.card {
+  background-color: white;
+  width: 280px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-decoration: none;
+  color: #333;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  border-color: #0077cc;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.card h3 {
+  color: #004aad;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.card p {
+  font-size: 1.1rem;
+  color: #555;
+}
+
+/* Pie de página */
+footer {
+  background-color: #f0f4ff;
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+  color: #666;
+  border-top: 1px solid #ccc;
+}
+
+/* Adaptación para móviles */
+@media (max-width: 600px) {
+  header h1 {
+    font-size: 1.8rem;
+  }
+
+  .card {
+    width: 90%;
+  }
+}
+
+/* Justificación simple de párrafos */
+main p {
+  text-align: justify;
+  line-height: 1.6; /* Opcional: hace el texto más legible */
+  margin-bottom: 1rem; /* Opcional: separación entre párrafos */
+}
