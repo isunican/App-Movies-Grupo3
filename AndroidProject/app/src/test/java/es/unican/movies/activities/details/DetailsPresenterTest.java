@@ -1,4 +1,4 @@
-package es.unican.movies.activities.main;
+package es.unican.movies.activities.details;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;

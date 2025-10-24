@@ -6,6 +6,7 @@
 package es.unican.movies.activities.details;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -81,7 +82,7 @@ public class DetailsView extends AppCompatActivity implements IDetailsContract.V
     @Override
     public void hidePendingBadge() {
         TextView tvPendingStatus = findViewById(R.id.tvPendingStatus);
-        tvPendingStatus.setVisibility(TextView.GONE);
+        tvPendingStatus.setVisibility(View.GONE);
     }
 
     /**
@@ -90,7 +91,7 @@ public class DetailsView extends AppCompatActivity implements IDetailsContract.V
     @Override
     public void hideFavouriteBadge() {
         TextView tvFavouriteStatus = findViewById(R.id.tvFavouriteStatus);
-        tvFavouriteStatus.setVisibility(TextView.GONE);
+        tvFavouriteStatus.setVisibility(View.GONE);
     }
 
     /**
