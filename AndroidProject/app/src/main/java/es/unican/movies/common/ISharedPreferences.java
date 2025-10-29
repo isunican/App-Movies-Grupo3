@@ -46,4 +46,12 @@ public interface ISharedPreferences {
      */
     public boolean saveFavouriteMovie(Movie movie);
 
+    /**
+     * Elimina una película de la lista de favoritos.
+     *
+     * @param movie La película que se desea eliminar de la lista de favoritos.
+     * @return true si la eliminación fue satisfactoria, false en caso contrario.
+     */
+    boolean removeFavouriteMovie(Movie movie);
+
 }

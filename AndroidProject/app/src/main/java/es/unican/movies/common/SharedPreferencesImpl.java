@@ -59,4 +59,14 @@ public class SharedPreferencesImpl implements ISharedPreferences {
         String json = gson.toJson(movie);
         return prefsFavourite.edit().putString(String.valueOf(movie.getId()), json).commit();
     }
+
+    /**
+     * Elimina una película de la lista de favoritos.
+     *
+     * @return true si se eliminó correctamente, false en caso contrario
+     */
+    @Override
+    public boolean removeFavouriteMovie(Movie movie) {
+        return prefsFavourite.edit().remove(String.valueOf(movie.getId())).commit();
+    }
 }

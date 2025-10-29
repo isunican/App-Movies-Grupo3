@@ -23,4 +23,7 @@ public class SharedPreferencesFake implements ISharedPreferences {
     public boolean saveFavouriteMovie(Movie movie) {
         return false;
     }
+
+    @Override
+    public boolean removeFavouriteMovie(Movie movie) { return false; }
 }

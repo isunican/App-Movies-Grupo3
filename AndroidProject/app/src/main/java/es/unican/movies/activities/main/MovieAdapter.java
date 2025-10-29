@@ -136,28 +136,36 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
      * @param movie       the Movie associated with this row (used for persistence by id)
      */
     private void setupFavouriteButton(@NonNull View convertView, @NonNull Movie movie) {
+        // retrieve image button
         ImageButton ibFavourite = convertView.findViewById(R.id.ibFavourite);
+
+        // check whether the movie is currently in "Favorites"
         boolean isFavourite = sharedPreferences.movieIsFavourite(movie.getId());
 
-        if (isFavourite) {
-            ibFavourite.setVisibility(View.GONE);
-            ibFavourite.setOnClickListener(null); // evitar listeners residuales
-        } else {
-            ibFavourite.setVisibility(View.VISIBLE);
-            ibFavourite.setOnClickListener(v -> {
-                boolean persistenceResult = sharedPreferences.saveFavouriteMovie(movie);
-                ibFavourite.setVisibility(View.GONE);
-                notifyDataSetChanged();
-                Context ctx = v.getContext();
-                if (persistenceResult) {
-                    Toast.makeText(ctx, "Película guardada correctamente en Favoritos", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(ctx, "Ha ocurrido un error. Por favor, vuelve a intentarlo", Toast.LENGTH_LONG).show();
-                }
-            });
-        }
-    }
+        // set the icon based on whether the movie is in "Favorites"
+        ibFavourite.setImageResource(isFavourite ? R.drawable.fullheart : R.drawable.emptyheart);
 
+        // set listener
+        ibFavourite.setOnClickListener(v -> {
+            Context ctx = v.getContext();
+            boolean success = isFavourite
+                    ? sharedPreferences.removeFavouriteMovie(movie)
+                    : sharedPreferences.saveFavouriteMovie(movie);
+
+            if (success) {
+                notifyDataSetChanged();
+                boolean nowFavourite = !isFavourite;
+                ibFavourite.setImageResource(nowFavourite ? R.drawable.fullheart : R.drawable.emptyheart);
+
+                String msg = nowFavourite
+                        ? "Película guardada correctamente en Favoritos"
+                        : "Película eliminada correctamente de Favoritos";
+                Toast.makeText(ctx, msg, Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(ctx, "Ha ocurrido un error. Por favor, vuelve a intentarlo.", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
 
     /**
      * Returns the number of movies in the adapter.
