@@ -36,6 +36,17 @@ public interface IMainContract {
          */
         public void onMenuInfoClicked();
 
+
+        /**
+         * The presenter is informed that the user wants to search for a movie by name.
+         * This method should be called only by the View when a search query is submitted
+         * (for example, when the user presses Enter or taps the search icon).
+         *
+         * The presenter will handle the logic of querying the data source (repository)
+         * to find movies that match the provided name and then update the View with the results.
+         */
+        public void onMovieSearch(String name);
+
     }
 
     /**
