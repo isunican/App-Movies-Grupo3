@@ -6,6 +6,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -122,9 +124,31 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     @Override
     public void init() {
         lvMovies = findViewById(R.id.lvMovies);
+        TextView tvNotFound = findViewById(R.id.tvNotFound);
+        lvMovies.setEmptyView(tvNotFound);
         lvMovies.setOnItemClickListener((parent, view, position, id) -> {
             Movie movie = (Movie) parent.getItemAtPosition(position);
             presenter.onItemClicked(movie);
+        });
+
+        SearchView svMovies = findViewById(R.id.svPeliculas);
+        svMovies.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                if (query != null && !query.trim().isEmpty()) {
+                    presenter.onMovieSearch(query.trim());
+                } else {
+                    presenter.onMovieSearch("");
+                }
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+
         });
     }
 

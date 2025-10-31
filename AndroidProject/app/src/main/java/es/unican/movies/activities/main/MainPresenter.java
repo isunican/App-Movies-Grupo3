@@ -3,6 +3,7 @@ package es.unican.movies.activities.main;
 import android.util.Log;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import es.unican.movies.model.Movie;
 import es.unican.movies.service.ICallback;
@@ -11,6 +12,8 @@ import es.unican.movies.service.IMoviesRepository;
 public class MainPresenter implements IMainContract.Presenter {
 
     IMainContract.View view;
+
+    private List<Movie> allMovies;
 
 
     @Override
@@ -41,6 +44,7 @@ public class MainPresenter implements IMainContract.Presenter {
         repository.requestAggregateMovies(new ICallback<List<Movie>>() {
             @Override
             public void onSuccess(List<Movie> elements) {
+                allMovies = elements;
                 view.showMovies(elements);
                 view.showLoadCorrect(elements.size());
             }
@@ -50,5 +54,23 @@ public class MainPresenter implements IMainContract.Presenter {
                 view.showLoadError();
             }
         });
+    }
+
+    @Override
+    public void onMovieSearch(String name) {
+
+        if (allMovies == null || allMovies.isEmpty()) {
+            load();
+            return;
+        }
+
+        List<Movie> filteredMovies = allMovies.stream()
+                .filter(movie ->
+                    movie.getTitle() != null && movie.getTitle().toLowerCase().contains(name.toLowerCase())
+                ).collect(Collectors.toList());
+
+
+        view.showMovies(filteredMovies);
+        view.showLoadCorrect(filteredMovies.size());
     }
 }
