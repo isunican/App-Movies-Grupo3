@@ -136,17 +136,22 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
             @Override
             public boolean onQueryTextSubmit(String query) {
-                if (query != null && !query.trim().isEmpty()) {
-                    presenter.onMovieSearch(query.trim());
-                } else {
-                    presenter.onMovieSearch("");
-                }
+                //if (query != null && !query.trim().isEmpty()) {
+                //    presenter.onMovieSearch(query.trim());
+                //} else {
+                //    presenter.onMovieSearch("");
+                //}
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                return false;
+                if (newText != null && !newText.trim().isEmpty()) {
+                    presenter.onMovieSearch(newText.trim());
+                } else {
+                    presenter.onMovieSearch("");
+                }
+                return true;
             }
 
         });

@@ -64,6 +64,12 @@ public class MainPresenter implements IMainContract.Presenter {
             return;
         }
 
+        if (name.isEmpty()) {
+            view.showMovies(allMovies);
+            view.showLoadCorrect(allMovies.size());
+            return;
+        }
+
         List<Movie> filteredMovies = allMovies.stream()
                 .filter(movie ->
                     movie.getTitle() != null && movie.getTitle().toLowerCase().contains(name.toLowerCase())
