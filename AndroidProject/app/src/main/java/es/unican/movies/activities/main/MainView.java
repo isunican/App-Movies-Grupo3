@@ -36,7 +36,6 @@ import es.unican.movies.service.IMoviesRepository;
 @AndroidEntryPoint
 public class MainView extends AppCompatActivity implements IMainContract.View {
 
-
     /**
      * Presenter that will take control of this view.
      */
@@ -63,6 +62,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
      */
     private ListView lvMovies;
 
+    private MovieAdapter adapter;
 
     /**
      * Called when the activity is starting. Sets up the toolbar, presenter, and shared preferences.
@@ -145,7 +145,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
      */
     @Override
     public void showMovies(List<Movie> movies) {
-        MovieAdapter adapter = new MovieAdapter(this, movies, sharedPreferences);
+        this.adapter = new MovieAdapter(this, movies, sharedPreferences, presenter);
         lvMovies.setAdapter(adapter);
     }
 
@@ -188,4 +188,29 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     public void showInfoActivity() {
         startActivity(new Intent(this, InfoActivity.class));
     }
+
+    @Override
+    public void updatePendingState() {
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showAddPendingSuccess() {
+        Toast.makeText(this, "Película guardada correctamente en Pendientes", Toast.LENGTH_LONG).show();
+    }
+
+    public void showRemovePendingSuccess() {
+        Toast.makeText(this, "Película eliminada correctamente de Pendientes", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showPendingError() {
+        Toast.makeText(this, "Ha ocurrido un error. Por favor, vuelve a intentarlo", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public ISharedPreferences getSharedPreferences() {
+        return sharedPreferences;
+    }
+
 }

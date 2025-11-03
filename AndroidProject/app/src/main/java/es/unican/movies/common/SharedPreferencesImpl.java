@@ -2,7 +2,6 @@ package es.unican.movies.common;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -58,5 +57,10 @@ public class SharedPreferencesImpl implements ISharedPreferences {
     public boolean saveFavouriteMovie(Movie movie) {
         String json = gson.toJson(movie);
         return prefsFavourite.edit().putString(String.valueOf(movie.getId()), json).commit();
+    }
+
+    public boolean removePendingMovie(Movie movie) {
+        String json = gson.toJson(movie);
+        return prefsPending.edit().remove(String.valueOf(movie.getId())).commit();
     }
 }

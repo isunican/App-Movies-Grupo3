@@ -1,9 +1,8 @@
 package es.unican.movies.activities.main;
 
-import android.util.Log;
-
 import java.util.List;
 
+import es.unican.movies.common.ISharedPreferences;
 import es.unican.movies.model.Movie;
 import es.unican.movies.service.ICallback;
 import es.unican.movies.service.IMoviesRepository;
@@ -12,10 +11,12 @@ public class MainPresenter implements IMainContract.Presenter {
 
     IMainContract.View view;
 
+    private ISharedPreferences sharedPreferences;
 
     @Override
     public void init(IMainContract.View view) {
         this.view = view;
+        this.sharedPreferences = view.getSharedPreferences();
         this.view.init();
         load();
     }
@@ -51,4 +52,27 @@ public class MainPresenter implements IMainContract.Presenter {
             }
         });
     }
+
+    public void onPendingClicked(Movie movie) {
+        boolean isPending = sharedPreferences.movieIsPending(movie.getId());
+        boolean success = false;
+        if (isPending) {
+            success = sharedPreferences.removePendingMovie(movie);
+        } else {
+            success = sharedPreferences.savePendingMovie(movie);
+        }
+        view.updatePendingState();
+        if (success & isPending) {
+            view.showRemovePendingSuccess();
+        } else if (success & !isPending) {
+            view.showAddPendingSuccess();
+        } else {
+            view.showPendingError();
+        }
+    }
+
+    public boolean isMoviePending(Movie movie) {
+        return sharedPreferences.movieIsPending(movie.getId());
+    }
+
 }

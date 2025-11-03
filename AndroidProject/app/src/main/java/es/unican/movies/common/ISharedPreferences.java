@@ -46,4 +46,6 @@ public interface ISharedPreferences {
      */
     public boolean saveFavouriteMovie(Movie movie);
 
+    public boolean removePendingMovie(Movie movie);
+
 }
