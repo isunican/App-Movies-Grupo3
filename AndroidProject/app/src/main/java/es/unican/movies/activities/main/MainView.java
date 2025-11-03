@@ -6,6 +6,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -36,7 +38,6 @@ import es.unican.movies.service.IMoviesRepository;
 @AndroidEntryPoint
 public class MainView extends AppCompatActivity implements IMainContract.View {
 
-
     /**
      * Presenter that will take control of this view.
      */
@@ -63,6 +64,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
      */
     private ListView lvMovies;
 
+    private MovieAdapter adapter;
 
     /**
      * Called when the activity is starting. Sets up the toolbar, presenter, and shared preferences.
@@ -122,9 +124,36 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     @Override
     public void init() {
         lvMovies = findViewById(R.id.lvMovies);
+        TextView tvNotFound = findViewById(R.id.tvNotFound);
+        lvMovies.setEmptyView(tvNotFound);
         lvMovies.setOnItemClickListener((parent, view, position, id) -> {
             Movie movie = (Movie) parent.getItemAtPosition(position);
             presenter.onItemClicked(movie);
+        });
+
+        SearchView svMovies = findViewById(R.id.svPeliculas);
+        svMovies.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                //if (query != null && !query.trim().isEmpty()) {
+                //    presenter.onMovieSearch(query.trim());
+                //} else {
+                //    presenter.onMovieSearch("");
+                //}
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (newText != null && !newText.trim().isEmpty()) {
+                    presenter.onMovieSearch(newText.trim());
+                } else {
+                    presenter.onMovieSearch("");
+                }
+                return true;
+            }
+
         });
     }
 
@@ -145,7 +174,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
      */
     @Override
     public void showMovies(List<Movie> movies) {
-        MovieAdapter adapter = new MovieAdapter(this, movies, sharedPreferences);
+        this.adapter = new MovieAdapter(this, movies, sharedPreferences, presenter);
         lvMovies.setAdapter(adapter);
     }
 
@@ -188,4 +217,29 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     public void showInfoActivity() {
         startActivity(new Intent(this, InfoActivity.class));
     }
+
+    @Override
+    public void updatePendingState() {
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showAddPendingSuccess() {
+        Toast.makeText(this, "Película guardada correctamente en Pendientes", Toast.LENGTH_LONG).show();
+    }
+
+    public void showRemovePendingSuccess() {
+        Toast.makeText(this, "Película eliminada correctamente de Pendientes", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showPendingError() {
+        Toast.makeText(this, "Ha ocurrido un error. Por favor, vuelve a intentarlo", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public ISharedPreferences getSharedPreferences() {
+        return sharedPreferences;
+    }
+
 }

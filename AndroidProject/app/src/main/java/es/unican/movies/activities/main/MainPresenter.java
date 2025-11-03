@@ -1,9 +1,9 @@
 package es.unican.movies.activities.main;
 
-import android.util.Log;
-
 import java.util.List;
+import java.util.stream.Collectors;
 
+import es.unican.movies.common.ISharedPreferences;
 import es.unican.movies.model.Movie;
 import es.unican.movies.service.ICallback;
 import es.unican.movies.service.IMoviesRepository;
@@ -12,10 +12,14 @@ public class MainPresenter implements IMainContract.Presenter {
 
     IMainContract.View view;
 
+    private List<Movie> allMovies;
+
+    private ISharedPreferences sharedPreferences;
 
     @Override
     public void init(IMainContract.View view) {
         this.view = view;
+        this.sharedPreferences = view.getSharedPreferences();
         this.view.init();
         load();
     }
@@ -41,6 +45,7 @@ public class MainPresenter implements IMainContract.Presenter {
         repository.requestAggregateMovies(new ICallback<List<Movie>>() {
             @Override
             public void onSuccess(List<Movie> elements) {
+                allMovies = elements;
                 view.showMovies(elements);
                 view.showLoadCorrect(elements.size());
             }
@@ -51,4 +56,53 @@ public class MainPresenter implements IMainContract.Presenter {
             }
         });
     }
+
+    @Override
+    public void onMovieSearch(String name) {
+
+        if (allMovies == null || allMovies.isEmpty()) {
+            load();
+            return;
+        }
+
+        if (name.isEmpty()) {
+            view.showMovies(allMovies);
+            view.showLoadCorrect(allMovies.size());
+            return;
+        }
+
+        List<Movie> filteredMovies = allMovies.stream()
+                .filter(movie ->
+                    movie.getTitle() != null && movie.getTitle().toLowerCase().contains(name.toLowerCase())
+                ).collect(Collectors.toList());
+
+
+        view.showMovies(filteredMovies);
+        view.showLoadCorrect(filteredMovies.size());
+    }
+
+    @Override
+    public void onPendingClicked(Movie movie) {
+        boolean isPending = sharedPreferences.movieIsPending(movie.getId());
+        boolean success = false;
+        if (isPending) {
+            success = sharedPreferences.removePendingMovie(movie);
+        } else {
+            success = sharedPreferences.savePendingMovie(movie);
+        }
+        view.updatePendingState();
+        if (success & isPending) {
+            view.showRemovePendingSuccess();
+        } else if (success & !isPending) {
+            view.showAddPendingSuccess();
+        } else {
+            view.showPendingError();
+        }
+    }
+
+    @Override
+    public boolean isMoviePending(Movie movie) {
+        return sharedPreferences.movieIsPending(movie.getId());
+    }
+
 }

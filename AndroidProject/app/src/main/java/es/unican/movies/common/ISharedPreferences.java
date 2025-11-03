@@ -54,4 +54,11 @@ public interface ISharedPreferences {
      */
     boolean removeFavouriteMovie(Movie movie);
 
+    /**
+     * Elimina una película de la lista de pendientes.
+     * @param movie La película que se quiere eliminar de la lista.
+     * @return true si la eliminación fue satisfactoria, false en caso contrario.
+     */
+    public boolean removePendingMovie(Movie movie);
+
 }
