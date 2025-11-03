@@ -37,8 +37,29 @@ public interface IMainContract {
          */
         public void onMenuInfoClicked();
 
+
+        /**
+         * The presenter is informed that the user wants to search for a movie by name.
+         * This method should be called only by the View when a search query is submitted
+         * (for example, when the user presses Enter or taps the search icon).
+         *
+         * The presenter will handle the logic of querying the data source (repository)
+         * to find movies that match the provided name and then update the View with the results.
+         */
+        public void onMovieSearch(String name);
+
+        /**
+         * Listener for when the 'Add to Pending' button is clicked
+         * on a movie.
+         * @param movie
+         */
         public void onPendingClicked(Movie movie);
 
+        /**
+         * Checks whether a movie is Pending or not.
+         * @param movie the movie to check
+         * @return true if is Pending, false otherwise
+         */
         public boolean isMoviePending(Movie movie);
 
     }
