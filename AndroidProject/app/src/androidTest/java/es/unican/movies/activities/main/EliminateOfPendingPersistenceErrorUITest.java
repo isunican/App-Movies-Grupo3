@@ -8,8 +8,7 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.CoreMatchers.anything;
-import static org.hamcrest.Matchers.not;
-import static es.unican.movies.utils.DrawableMatcher.hasDrawable;
+import static es.unican.movies.utils.Matchers.hasDrawable;
 import static es.unican.movies.utils.MockRepositories.getTestRepository;
 
 import android.content.Context;
