@@ -68,34 +68,25 @@ public class AddToPendingFailUITest {
      @Test
      // a. El usuario ve la lista de películas y pulsa "Añadir a pendientes"
      public void addToPending_persistenceError() {
+         // a. El usuario ve la lista de películas y pulsa "Añadir a pendientes"
          onData(anything())
-         .inAdapterView(withId(R.id.lvMovies))
-         .atPosition(1)
-         .onChildView(withId(R.id.ibPending))
-         .perform(click());
-
-         // b. Aparece un Toast indicando que ha habido un error al guardar
-         //Esperar un momento para que el Toast aparezca
-         /*
-         waitForToast(1500);
-         onView(withText("Ha ocurrido un error. Por favor, vuelve a intentarlo"))
-                 .inRoot(withDecorView(not(is(decorView))))
-                 .check(matches(isDisplayed()));
-        */
-
+                 .inAdapterView(withId(R.id.lvMovies))
+                 .atPosition(1)
+                 .onChildView(withId(R.id.ibPending))
+                 .perform(click());
 
          // c. El botón "Añadir a pendientes" sigue visible en ese ítem
          onData(anything())
-         .inAdapterView(withId(R.id.lvMovies))
-         .atPosition(1)
-         .onChildView(withId(R.id.ibPending))
-         .check(matches(isDisplayed()));
+                 .inAdapterView(withId(R.id.lvMovies))
+                 .atPosition(1)
+                 .onChildView(withId(R.id.ibPending))
+                 .check(matches(isDisplayed()));
 
          // d. El usuario entra a la vista detallada de la película
          onData(anything())
-         .inAdapterView(withId(R.id.lvMovies))
-         .atPosition(1)
-         .perform(click());
+                 .inAdapterView(withId(R.id.lvMovies))
+                 .atPosition(1)
+                 .perform(click());
 
          // e. En la vista detallada NO debe haber una insignia "Pendiente"
          onView(withId(R.id.tvPendingStatus))
