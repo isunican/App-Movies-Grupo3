@@ -25,7 +25,6 @@ import es.unican.movies.R;
 import es.unican.movies.activities.details.DetailsView;
 import es.unican.movies.activities.info.InfoActivity;
 import es.unican.movies.common.ISharedPreferences;
-import es.unican.movies.common.SharedPreferencesImpl;
 import es.unican.movies.model.Movie;
 import es.unican.movies.service.IMoviesRepository;
 
@@ -83,7 +82,6 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
         // instantiate presenter, let it take control
         presenter = new MainPresenter();
-        // sharedPreferences = new SharedPreferencesImpl(this);
         presenter.init(this);
     }
 

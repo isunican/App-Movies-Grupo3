@@ -9,6 +9,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.CoreMatchers.anything;
 import static org.hamcrest.Matchers.not;
 
+import static es.unican.movies.utils.DrawableMatcher.hasDrawable;
 import static es.unican.movies.utils.MockRepositories.getTestRepository;
 
 import android.content.Context;
@@ -74,12 +75,17 @@ public class AddToFavoritesSuccessUITest {
         //        .inRoot(withDecorView(not(is(decorView))))
         //        .check(matches(isDisplayed()));
 
+        try {
+            Thread.sleep(1000); // ajustar si es necesario
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
         // c. El botón "Añadir a favoritos" del ítem pulsado desaparece
         onData(anything())
                 .inAdapterView(withId(R.id.lvMovies))
                 .atPosition(0)
                 .onChildView(withId(R.id.ibFavourite))
-                .check(matches(not(isDisplayed())));
+                .check(matches(hasDrawable(R.drawable.favourite)));
 
         // d. El usuario entra a la vista detallada de la película
         onData(anything()).inAdapterView(withId(R.id.lvMovies)).atPosition(0).perform(click());

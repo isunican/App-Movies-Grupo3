@@ -59,8 +59,21 @@ public class SharedPreferencesImpl implements ISharedPreferences {
         return prefsFavourite.edit().putString(String.valueOf(movie.getId()), json).commit();
     }
 
+    /**
+     * Elimina una película marcada como pendiente de las preferencias.
+     */
+    @Override
     public boolean removePendingMovie(Movie movie) {
         String json = gson.toJson(movie);
         return prefsPending.edit().remove(String.valueOf(movie.getId())).commit();
+    }
+
+    /**
+     * Elimina una película marcada como favorita de las preferencias.
+     */
+    @Override
+    public boolean removeFavouriteMovie(Movie movie) {
+        String json = gson.toJson(movie);
+        return prefsFavourite.edit().remove(String.valueOf(movie.getId())).commit();
     }
 }

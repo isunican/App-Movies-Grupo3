@@ -16,6 +16,9 @@ import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
 import es.unican.movies.R;
 import es.unican.movies.common.ISharedPreferences;
 import es.unican.movies.common.SharedPreferencesImpl;
@@ -27,12 +30,13 @@ import lombok.Getter;
 /**
  * Activity to show the details of a movie.
  */
-
+@AndroidEntryPoint
 public class DetailsView extends AppCompatActivity implements IDetailsContract.View {
 
     public static final String INTENT_MOVIE = "INTENT_MOVIE";
     private IDetailsContract.Presenter presenter;
-    private ISharedPreferences sharedPreferences;
+    @Inject
+    public ISharedPreferences sharedPreferences;
     @Getter
     private Movie movie;
 
@@ -48,7 +52,6 @@ public class DetailsView extends AppCompatActivity implements IDetailsContract.V
 
         // Create presenter
         this.presenter = new DetailsPresenter();
-        this.sharedPreferences = new SharedPreferencesImpl(this);
 
         // Get movie
         this.movie = Parcels.unwrap(getIntent().getExtras().getParcelable(INTENT_MOVIE));

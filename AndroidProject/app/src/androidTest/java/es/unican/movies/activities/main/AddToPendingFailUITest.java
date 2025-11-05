@@ -26,7 +26,7 @@ import dagger.hilt.android.testing.UninstallModules;
 
 import es.unican.movies.R;
 import es.unican.movies.common.ISharedPreferences;
-import es.unican.movies.common.SharedPreferencesFake;
+import es.unican.movies.utils.SharedPreferencesFakeAdd;
 import es.unican.movies.injection.RepositoriesModule;
 import es.unican.movies.injection.SharedPreferencesModule;
 import es.unican.movies.service.IMoviesRepository;
@@ -50,7 +50,7 @@ public class AddToPendingFailUITest {
     final IMoviesRepository repository = MockRepositories.getTestRepository(context, R.raw.sample_movies);
 
     @BindValue
-    final ISharedPreferences sharedPrefs = new SharedPreferencesFake();
+    final ISharedPreferences sharedPrefs = new SharedPreferencesFakeAdd();
 
     // decorView de la activity para localizar Toasts
     private View decorView;

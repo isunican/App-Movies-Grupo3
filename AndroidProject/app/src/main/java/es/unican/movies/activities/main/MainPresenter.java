@@ -90,10 +90,11 @@ public class MainPresenter implements IMainContract.Presenter {
         } else {
             success = sharedPreferences.savePendingMovie(movie);
         }
-        view.updatePendingState();
         if (success & isPending) {
+            view.updatePendingState();
             view.showRemovePendingSuccess();
         } else if (success & !isPending) {
+            view.updatePendingState();
             view.showAddPendingSuccess();
         } else {
             view.showPendingError();

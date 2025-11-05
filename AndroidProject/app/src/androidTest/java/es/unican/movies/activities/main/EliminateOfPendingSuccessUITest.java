@@ -8,6 +8,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.CoreMatchers.anything;
 import static org.hamcrest.Matchers.not;
+
 import static es.unican.movies.utils.DrawableMatcher.hasDrawable;
 import static es.unican.movies.utils.MockRepositories.getTestRepository;
 
@@ -26,15 +27,12 @@ import dagger.hilt.android.testing.HiltAndroidRule;
 import dagger.hilt.android.testing.HiltAndroidTest;
 import dagger.hilt.android.testing.UninstallModules;
 import es.unican.movies.R;
-import es.unican.movies.common.ISharedPreferences;
-import es.unican.movies.utils.SharedPreferencesFakeAdd;
 import es.unican.movies.injection.RepositoriesModule;
-import es.unican.movies.injection.SharedPreferencesModule;
 import es.unican.movies.service.IMoviesRepository;
 
-@UninstallModules({RepositoriesModule.class, SharedPreferencesModule.class})
+@UninstallModules(RepositoriesModule.class)
 @HiltAndroidTest
-public class AddToFavoritesPersistenceErrorUITest {
+public class EliminateOfPendingSuccessUITest {
 
     @Rule(order = 0)
     public HiltAndroidRule hiltRule = new HiltAndroidRule(this);
@@ -47,10 +45,6 @@ public class AddToFavoritesPersistenceErrorUITest {
     @BindValue
     final IMoviesRepository repository = getTestRepository(context, R.raw.sample_movies);
 
-    @BindValue
-    final ISharedPreferences sharedPrefs = new SharedPreferencesFakeAdd();
-
-
     private View decorView;
 
     @Before
@@ -60,38 +54,55 @@ public class AddToFavoritesPersistenceErrorUITest {
     }
 
     @Test
-    public void addToFavorites_success() {
+    public void eliminateOfPending_success() {
         // verifica que están las películas
         onView(withId(R.id.lvMovies)).check(matches(isDisplayed()));
 
-        // a. El usuario ve la lista de películas y pulsa "Añadir a favoritos"
+        // a. El pulsa "Pendiente" (botón relleno) sobre la película en posición 0 para añadirla
         onData(anything())
                 .inAdapterView(withId(R.id.lvMovies))
                 .atPosition(0)
-                .onChildView(withId(R.id.ibFavourite))
+                .onChildView(withId(R.id.ibPending))
+                .perform(click());
+
+        try {
+            Thread.sleep(1000); // ajustar si es necesario
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+        // a. El pulsa "Pendiente" (botón relleno) sobre la película en posición 0 para eliminarla
+        onData(anything())
+                .inAdapterView(withId(R.id.lvMovies))
+                .atPosition(0)
+                .onChildView(withId(R.id.ibPending))
                 .perform(click());
 
         // LA PARTE DEL TOAST NO SE PRUEBA PORQUE DA PROBLEMAS
+        // (comentada como en el original)
 
-        // Esperar 1.5s para que el Toast aparezca
-        // TestUtils.waitForToast(1500);
-
-        // b. Aparece un mensaje de confirmación (Toast) en la root del Toast
-        //onView(withText("Película guardada correctamente en Favoritos"))
-        //        .inRoot(withDecorView(not(is(decorView))))
-        //        .check(matches(isDisplayed()));
-
-        // c. El botón "Añadir a favoritos" del ítem pulsado NO desaparece
+        try {
+            Thread.sleep(1000); // ajustar si es necesario
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        // c. El botón "Pendiente" del ítem pulsado cambia a estado no seleccionado
         onData(anything())
                 .inAdapterView(withId(R.id.lvMovies))
                 .atPosition(0)
-                .onChildView(withId(R.id.ibFavourite))
-                .check(matches(hasDrawable(R.drawable.emptyheart)));
-
+                .onChildView(withId(R.id.ibPending))
+                .check(matches(hasDrawable(R.drawable.pendingsymbol)));
         // d. El usuario entra a la vista detallada de la película
         onData(anything()).inAdapterView(withId(R.id.lvMovies)).atPosition(0).perform(click());
 
-        // e. En la vista detallada NO aparece la insignia "Favorita"
-        onView(withId(R.id.tvFavouriteStatus)).check(matches(not(isDisplayed())));
+        // Espera breve para permitir que la UI se actualice (parche rápido).
+        try {
+            Thread.sleep(1000); // ajustar si es necesario
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+        // e. En la vista detallada ya no aparece la insignia "Pendiente"
+        onView(withId(R.id.tvPendingStatus)).check(matches(not(isDisplayed())));
     }
 }

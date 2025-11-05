@@ -46,6 +46,22 @@ public interface ISharedPreferences {
      */
     public boolean saveFavouriteMovie(Movie movie);
 
+    /**
+     * Elimina una película marcada como pendiente de las preferencias.
+     *
+     * @param movie objeto Movie a eliminar de pendientes (no debe ser {@code null})
+     * @return {@code true} si la eliminación se realizó con éxito,
+     *         {@code false} si hubo un error o el parámetro fue inválido
+     */
     public boolean removePendingMovie(Movie movie);
+
+    /**
+     * Elimina una película marcada como favorita de las preferencias.
+     *
+     * @param movie objeto Movie a eliminar de favoritas (no debe ser {@code null})
+     * @return {@code true} si la eliminación se realizó con éxito,
+     *         {@code false} si hubo un error o el parámetro fue inválido
+     */
+    public boolean removeFavouriteMovie(Movie movie);
 
 }

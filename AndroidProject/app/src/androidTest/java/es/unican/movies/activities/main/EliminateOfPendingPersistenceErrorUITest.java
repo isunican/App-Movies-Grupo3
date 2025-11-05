@@ -1,5 +1,6 @@
 package es.unican.movies.activities.main;
 
+
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -27,14 +28,14 @@ import dagger.hilt.android.testing.HiltAndroidTest;
 import dagger.hilt.android.testing.UninstallModules;
 import es.unican.movies.R;
 import es.unican.movies.common.ISharedPreferences;
-import es.unican.movies.utils.SharedPreferencesFakeAdd;
 import es.unican.movies.injection.RepositoriesModule;
 import es.unican.movies.injection.SharedPreferencesModule;
 import es.unican.movies.service.IMoviesRepository;
+import es.unican.movies.utils.SharedPreferencesFakeEliminate;
 
 @UninstallModules({RepositoriesModule.class, SharedPreferencesModule.class})
 @HiltAndroidTest
-public class AddToFavoritesPersistenceErrorUITest {
+public class EliminateOfPendingPersistenceErrorUITest {
 
     @Rule(order = 0)
     public HiltAndroidRule hiltRule = new HiltAndroidRule(this);
@@ -47,51 +48,57 @@ public class AddToFavoritesPersistenceErrorUITest {
     @BindValue
     final IMoviesRepository repository = getTestRepository(context, R.raw.sample_movies);
 
+
     @BindValue
-    final ISharedPreferences sharedPrefs = new SharedPreferencesFakeAdd();
+    final ISharedPreferences sharedPrefs = new SharedPreferencesFakeEliminate();
 
 
     private View decorView;
 
     @Before
     public void setUp() {
-        // Capturar la decorView de la activity para poder localizar los Toasts
-        //activityRule.getScenario().onActivity(activity -> decorView = activity.getWindow().getDecorView());
+
     }
+
 
     @Test
-    public void addToFavorites_success() {
-        // verifica que están las películas
+    public void eliminateOfPending_persistenceError() {
+        // 1. Verifica que la lista se muestra
         onView(withId(R.id.lvMovies)).check(matches(isDisplayed()));
 
-        // a. El usuario ve la lista de películas y pulsa "Añadir a favoritos"
+        // 2. El usuario pulsa "Pendiente" para intentar eliminar
         onData(anything())
                 .inAdapterView(withId(R.id.lvMovies))
                 .atPosition(0)
-                .onChildView(withId(R.id.ibFavourite))
+                .onChildView(withId(R.id.ibPending))
                 .perform(click());
 
-        // LA PARTE DEL TOAST NO SE PRUEBA PORQUE DA PROBLEMAS
+        // 3. Espera para la actualización de UI
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
 
-        // Esperar 1.5s para que el Toast aparezca
-        // TestUtils.waitForToast(1500);
-
-        // b. Aparece un mensaje de confirmación (Toast) en la root del Toast
-        //onView(withText("Película guardada correctamente en Favoritos"))
-        //        .inRoot(withDecorView(not(is(decorView))))
-        //        .check(matches(isDisplayed()));
-
-        // c. El botón "Añadir a favoritos" del ítem pulsado NO desaparece
+        // 4. El botón mantiene su estado (relleno porque el error no cambió el estado)
         onData(anything())
                 .inAdapterView(withId(R.id.lvMovies))
                 .atPosition(0)
-                .onChildView(withId(R.id.ibFavourite))
-                .check(matches(hasDrawable(R.drawable.emptyheart)));
+                .onChildView(withId(R.id.ibPending))
+                .check(matches(hasDrawable(R.drawable.pendingsymbol_filled)));
 
-        // d. El usuario entra a la vista detallada de la película
+        // 5. Entra en la vista detallada
         onData(anything()).inAdapterView(withId(R.id.lvMovies)).atPosition(0).perform(click());
 
-        // e. En la vista detallada NO aparece la insignia "Favorita"
-        onView(withId(R.id.tvFavouriteStatus)).check(matches(not(isDisplayed())));
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+        // 6. La insignia "Pendiente" sigue visible debido al error de persistencia
+        onView(withId(R.id.tvPendingStatus)).check(matches(isDisplayed()));
     }
+
 }
+
