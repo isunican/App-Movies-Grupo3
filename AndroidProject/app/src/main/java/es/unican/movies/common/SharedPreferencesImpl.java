@@ -70,7 +70,6 @@ public class SharedPreferencesImpl implements ISharedPreferences {
     }
 
     public boolean removePendingMovie(Movie movie) {
-        String json = gson.toJson(movie);
         return prefsPending.edit().remove(String.valueOf(movie.getId())).commit();
     }
 }

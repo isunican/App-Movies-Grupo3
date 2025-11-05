@@ -90,10 +90,11 @@ public class MainPresenter implements IMainContract.Presenter {
         } else {
             success = sharedPreferences.savePendingMovie(movie);
         }
-        view.updatePendingState();
         if (success & isPending) {
+            view.updatePendingState();
             view.showRemovePendingSuccess();
         } else if (success & !isPending) {
+            view.updatePendingState();
             view.showAddPendingSuccess();
         } else {
             view.showPendingError();
@@ -101,8 +102,33 @@ public class MainPresenter implements IMainContract.Presenter {
     }
 
     @Override
+    public void onFavouriteClicked(Movie movie) {
+        boolean isFavourite = sharedPreferences.movieIsFavourite(movie.getId());
+        boolean success = false;
+        if (isFavourite) {
+            success = sharedPreferences.removeFavouriteMovie(movie);
+        } else {
+            success = sharedPreferences.saveFavouriteMovie(movie);
+        }
+        if (success & isFavourite) {
+            view.updateFavouriteState();
+            view.showRemoveFavouriteSuccess();
+        } else if (success & !isFavourite) {
+            view.updateFavouriteState();
+            view.showAddFavouriteSuccess();
+        } else {
+            view.showFavouriteError();
+        }
+    }
+
+    @Override
     public boolean isMoviePending(Movie movie) {
         return sharedPreferences.movieIsPending(movie.getId());
+    }
+
+    @Override
+    public boolean isMovieFavourite(Movie movie) {
+        return sharedPreferences.movieIsFavourite(movie.getId());
     }
 
 }
