@@ -51,9 +51,16 @@ public interface IMainContract {
         /**
          * Listener for when the 'Add to Pending' button is clicked
          * on a movie.
-         * @param movie
+         * @param movie movie whose button was clicked
          */
         public void onPendingClicked(Movie movie);
+
+        /**
+         * Listener for when the 'Add to Favourite' button is clicked
+         * on a movie.
+         * @param movie movie whose button was clicked
+         */
+        public void onFavouriteClicked(Movie movie);
 
         /**
          * Checks whether a movie is Pending or not.
@@ -61,6 +68,13 @@ public interface IMainContract {
          * @return true if is Pending, false otherwise
          */
         public boolean isMoviePending(Movie movie);
+
+        /**
+         * Checks whether a movie is Favourite or not.
+         * @param movie the movie to check
+         * @return true if is Favourite, false otherwise
+         */
+        public boolean isMovieFavourite(Movie movie);
 
     }
 
@@ -144,6 +158,14 @@ public interface IMainContract {
          * trying to add a movie to Pending.
          */
         public void showPendingError();
+
+        public void updateFavouriteState();
+
+        public void showAddFavouriteSuccess();
+
+        public void showRemoveFavouriteSuccess();
+
+        public void showFavouriteError();
 
         /**
          * Get the current ISharedPreferences instance

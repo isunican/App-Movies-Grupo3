@@ -236,6 +236,23 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     }
 
     @Override
+    public void updateFavouriteState() { adapter.notifyDataSetChanged(); }
+
+    @Override
+    public void showAddFavouriteSuccess() {
+        Toast.makeText(this, "Película guardada correctamente en Favoritos", Toast.LENGTH_LONG).show();
+    }
+
+    public void showRemoveFavouriteSuccess() {
+        Toast.makeText(this, "Película eliminada correctamente de Favoritos", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showFavouriteError() {
+        Toast.makeText(this, "Ha ocurrido un error. Por favor, vuelve a intentarlo", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
     public ISharedPreferences getSharedPreferences() {
         return sharedPreferences;
     }

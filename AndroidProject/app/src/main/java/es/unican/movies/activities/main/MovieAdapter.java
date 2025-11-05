@@ -91,10 +91,15 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
         // titulo
         TextView tvTitle = convertView.findViewById(R.id.tvTitle);
         tvTitle.setText(movie.getTitle());
-        
+
         ImageButton ibPending = convertView.findViewById(R.id.ibPending);
         ibPending.setOnClickListener(v -> {
             presenter.onPendingClicked(movie);
+        });
+
+        ImageButton ibFavourite = convertView.findViewById(R.id.ibFavourite);
+        ibFavourite.setOnClickListener(v -> {
+            presenter.onFavouriteClicked(movie);
         });
 
         // Delegar la configuración del botón de pendientes a un metodo
@@ -132,25 +137,8 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
      */
     private void setupFavouriteButton(@NonNull View convertView, @NonNull Movie movie) {
         ImageButton ibFavourite = convertView.findViewById(R.id.ibFavourite);
-        boolean isFavourite = sharedPreferences.movieIsFavourite(movie.getId());
-
-        if (isFavourite) {
-            ibFavourite.setVisibility(View.GONE);
-            ibFavourite.setOnClickListener(null); // evitar listeners residuales
-        } else {
-            ibFavourite.setVisibility(View.VISIBLE);
-            ibFavourite.setOnClickListener(v -> {
-                boolean persistenceResult = sharedPreferences.saveFavouriteMovie(movie);
-                ibFavourite.setVisibility(View.GONE);
-                notifyDataSetChanged();
-                Context ctx = v.getContext();
-                if (persistenceResult) {
-                    Toast.makeText(ctx, "Película guardada correctamente en Favoritos", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(ctx, "Ha ocurrido un error. Por favor, vuelve a intentarlo", Toast.LENGTH_LONG).show();
-                }
-            });
-        }
+        boolean isFavourite = presenter.isMovieFavourite(movie);
+        ibFavourite.setImageResource(isFavourite ? R.drawable.fullheart : R.drawable.emptyheart);
     }
 
     /**
