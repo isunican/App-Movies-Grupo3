@@ -9,6 +9,8 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.CoreMatchers.anything;
 import static org.hamcrest.Matchers.not;
 
+import static es.unican.movies.utils.DrawableMatcher.hasDrawable;
+
 import android.content.Context;
 import android.view.View;
 
@@ -93,7 +95,7 @@ public class AddToPendingUITest {
                 .inAdapterView(withId(R.id.lvMovies))
                 .atPosition(1)
                 .onChildView(withId(R.id.ibPending))
-                .check(matches(not(isDisplayed())));
+                .check(matches(hasDrawable(R.drawable.pendingsymbol_filled)));
 
         // d. El usuario entra a la vista detallada de la película
         onData(anything()).inAdapterView(withId(R.id.lvMovies)).atPosition(1).perform(click());
