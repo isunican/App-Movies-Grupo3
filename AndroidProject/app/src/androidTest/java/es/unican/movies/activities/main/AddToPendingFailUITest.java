@@ -4,10 +4,12 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.CoreMatchers.anything;
+
+
+import static es.unican.movies.utils.Matchers.hasDrawable;
 
 import android.content.Context;
 import android.view.View;
@@ -75,12 +77,12 @@ public class AddToPendingFailUITest {
                  .onChildView(withId(R.id.ibPending))
                  .perform(click());
 
-         // c. El botón "Añadir a pendientes" sigue visible en ese ítem
+         // c. El botón "Añadir a pendientes" se mantiene igual
          onData(anything())
                  .inAdapterView(withId(R.id.lvMovies))
                  .atPosition(1)
                  .onChildView(withId(R.id.ibPending))
-                 .check(matches(isDisplayed()));
+                 .check(matches(hasDrawable(R.drawable.pendingsymbol)));
 
          // d. El usuario entra a la vista detallada de la película
          onData(anything())
