@@ -8,6 +8,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.CoreMatchers.anything;
 import static org.hamcrest.Matchers.not;
+import static es.unican.movies.utils.Matchers.hasDrawable;
 import static es.unican.movies.utils.MockRepositories.getTestRepository;
 
 import android.content.Context;
@@ -26,7 +27,7 @@ import dagger.hilt.android.testing.HiltAndroidTest;
 import dagger.hilt.android.testing.UninstallModules;
 import es.unican.movies.R;
 import es.unican.movies.common.ISharedPreferences;
-import es.unican.movies.common.SharedPreferencesFake;
+import es.unican.movies.utils.SharedPreferencesFakeAdd;
 import es.unican.movies.injection.RepositoriesModule;
 import es.unican.movies.injection.SharedPreferencesModule;
 import es.unican.movies.service.IMoviesRepository;
@@ -47,7 +48,7 @@ public class AddToFavoritesPersistenceErrorUITest {
     final IMoviesRepository repository = getTestRepository(context, R.raw.sample_movies);
 
     @BindValue
-    final ISharedPreferences sharedPrefs = new SharedPreferencesFake();
+    final ISharedPreferences sharedPrefs = new SharedPreferencesFakeAdd();
 
 
     private View decorView;
@@ -85,7 +86,7 @@ public class AddToFavoritesPersistenceErrorUITest {
                 .inAdapterView(withId(R.id.lvMovies))
                 .atPosition(0)
                 .onChildView(withId(R.id.ibFavourite))
-                .check(matches(isDisplayed()));
+                .check(matches(hasDrawable(R.drawable.emptyheart)));
 
         // d. El usuario entra a la vista detallada de la película
         onData(anything()).inAdapterView(withId(R.id.lvMovies)).atPosition(0).perform(click());
