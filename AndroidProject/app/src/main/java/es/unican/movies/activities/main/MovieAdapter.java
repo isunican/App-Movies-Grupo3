@@ -1,7 +1,6 @@
 package es.unican.movies.activities.main;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +40,7 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
 
     private final ISharedPreferences sharedPreferences;
 
+    private final IMainContract.Presenter presenter;
 
     /**
      * Constructs a new MovieAdapter.
@@ -49,11 +49,17 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
      * @param movieList the list of movies to display
      * @param sharedPreferences the shared preferences for managing pending movies
      */
-    protected MovieAdapter(@NonNull Context context, @NonNull List<Movie> movieList, ISharedPreferences sharedPreferences) {
+    protected MovieAdapter(
+            @NonNull Context context,
+            @NonNull List<Movie> movieList,
+            ISharedPreferences sharedPreferences,
+            IMainContract.Presenter presenter
+    ) {
         super(context, R.layout.activity_main_movie_item, movieList);
         this.context = context;
         this.movieList = movieList;
-        this.sharedPreferences =  sharedPreferences;
+        this.sharedPreferences = sharedPreferences;
+        this.presenter = presenter;
     }
 
 
@@ -86,6 +92,16 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
         TextView tvTitle = convertView.findViewById(R.id.tvTitle);
         tvTitle.setText(movie.getTitle());
 
+        ImageButton ibPending = convertView.findViewById(R.id.ibPending);
+        ibPending.setOnClickListener(v -> {
+            presenter.onPendingClicked(movie);
+        });
+
+        ImageButton ibFavourite = convertView.findViewById(R.id.ibFavourite);
+        ibFavourite.setOnClickListener(v -> {
+            presenter.onFavouriteClicked(movie);
+        });
+
         // Delegar la configuración del botón de pendientes a un metodo
         setupPendingButton(convertView, movie);
 
@@ -106,24 +122,8 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
      */
     private void setupPendingButton(@NonNull View convertView, @NonNull Movie movie) {
         ImageButton ibPending = convertView.findViewById(R.id.ibPending);
-        boolean isPending = sharedPreferences.movieIsPending(movie.getId());
-
-        if (isPending) {
-            ibPending.setVisibility(View.GONE);
-        } else {
-            ibPending.setVisibility(View.VISIBLE);
-            ibPending.setOnClickListener(v -> {
-                boolean persistenceResult = sharedPreferences.savePendingMovie(movie);
-                ibPending.setVisibility(View.GONE);
-                notifyDataSetChanged();
-                Context ctx = v.getContext();
-                if (persistenceResult) {
-                    Toast.makeText(ctx, "Película guardada correctamente en Pendientes", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(ctx, "Ha ocurrido un error. Por favor, vuelve a intentarlo", Toast.LENGTH_LONG).show();
-                }
-            });
-        }
+        boolean isPending = presenter.isMoviePending(movie);
+        ibPending.setImageResource(isPending ? R.drawable.pendingsymbol_filled : R.drawable.pendingsymbol);
     }
 
     /**
@@ -137,27 +137,9 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
      */
     private void setupFavouriteButton(@NonNull View convertView, @NonNull Movie movie) {
         ImageButton ibFavourite = convertView.findViewById(R.id.ibFavourite);
-        boolean isFavourite = sharedPreferences.movieIsFavourite(movie.getId());
-
-        if (isFavourite) {
-            ibFavourite.setVisibility(View.GONE);
-            ibFavourite.setOnClickListener(null); // evitar listeners residuales
-        } else {
-            ibFavourite.setVisibility(View.VISIBLE);
-            ibFavourite.setOnClickListener(v -> {
-                boolean persistenceResult = sharedPreferences.saveFavouriteMovie(movie);
-                ibFavourite.setVisibility(View.GONE);
-                notifyDataSetChanged();
-                Context ctx = v.getContext();
-                if (persistenceResult) {
-                    Toast.makeText(ctx, "Película guardada correctamente en Favoritos", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(ctx, "Ha ocurrido un error. Por favor, vuelve a intentarlo", Toast.LENGTH_LONG).show();
-                }
-            });
-        }
+        boolean isFavourite = presenter.isMovieFavourite(movie);
+        ibFavourite.setImageResource(isFavourite ? R.drawable.fullheart : R.drawable.emptyheart);
     }
-
 
     /**
      * Returns the number of movies in the adapter.

@@ -2,6 +2,7 @@ package es.unican.movies.activities.main;
 
 import java.util.List;
 
+import es.unican.movies.common.ISharedPreferences;
 import es.unican.movies.model.Movie;
 import es.unican.movies.service.IMoviesRepository;
 
@@ -46,6 +47,34 @@ public interface IMainContract {
          * to find movies that match the provided name and then update the View with the results.
          */
         public void onMovieSearch(String name);
+
+        /**
+         * Listener for when the 'Add to Pending' button is clicked
+         * on a movie.
+         * @param movie movie whose button was clicked
+         */
+        public void onPendingClicked(Movie movie);
+
+        /**
+         * Listener for when the 'Add to Favourite' button is clicked
+         * on a movie.
+         * @param movie movie whose button was clicked
+         */
+        public void onFavouriteClicked(Movie movie);
+
+        /**
+         * Checks whether a movie is Pending or not.
+         * @param movie the movie to check
+         * @return true if is Pending, false otherwise
+         */
+        public boolean isMoviePending(Movie movie);
+
+        /**
+         * Checks whether a movie is Favourite or not.
+         * @param movie the movie to check
+         * @return true if is Favourite, false otherwise
+         */
+        public boolean isMovieFavourite(Movie movie);
 
     }
 
@@ -107,6 +136,42 @@ public interface IMainContract {
          * Only the Presenter should call this method
          */
         public void showInfoActivity();
+
+        /**
+         * Add or remove a movie to the Pending list based
+         * on its current state.
+         */
+        public void updatePendingState();
+
+        /**
+         * Show a success Toast when a movie is added to Pending.
+         */
+        public void showAddPendingSuccess();
+
+        /**
+         * Show a success Toast when a movie is removed from Pending.
+         */
+        public void showRemovePendingSuccess();
+
+        /**
+         * Show an error Toast when a persistence error happens when
+         * trying to add a movie to Pending.
+         */
+        public void showPendingError();
+
+        public void updateFavouriteState();
+
+        public void showAddFavouriteSuccess();
+
+        public void showRemoveFavouriteSuccess();
+
+        public void showFavouriteError();
+
+        /**
+         * Get the current ISharedPreferences instance
+         * @return ISharedPreferences a specific instance of ISharedPreferences
+         */
+        public ISharedPreferences getSharedPreferences();
 
     }
 }

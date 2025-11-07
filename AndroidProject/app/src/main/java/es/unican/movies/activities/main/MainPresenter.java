@@ -1,10 +1,9 @@
 package es.unican.movies.activities.main;
 
-import android.util.Log;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
+import es.unican.movies.common.ISharedPreferences;
 import es.unican.movies.model.Movie;
 import es.unican.movies.service.ICallback;
 import es.unican.movies.service.IMoviesRepository;
@@ -15,10 +14,12 @@ public class MainPresenter implements IMainContract.Presenter {
 
     private List<Movie> allMovies;
 
+    private ISharedPreferences sharedPreferences;
 
     @Override
     public void init(IMainContract.View view) {
         this.view = view;
+        this.sharedPreferences = view.getSharedPreferences();
         this.view.init();
         load();
     }
@@ -79,4 +80,55 @@ public class MainPresenter implements IMainContract.Presenter {
         view.showMovies(filteredMovies);
         view.showLoadCorrect(filteredMovies.size());
     }
+
+    @Override
+    public void onPendingClicked(Movie movie) {
+        boolean isPending = sharedPreferences.movieIsPending(movie.getId());
+        boolean success = false;
+        if (isPending) {
+            success = sharedPreferences.removePendingMovie(movie);
+        } else {
+            success = sharedPreferences.savePendingMovie(movie);
+        }
+        if (success & isPending) {
+            view.updatePendingState();
+            view.showRemovePendingSuccess();
+        } else if (success & !isPending) {
+            view.updatePendingState();
+            view.showAddPendingSuccess();
+        } else {
+            view.showPendingError();
+        }
+    }
+
+    @Override
+    public void onFavouriteClicked(Movie movie) {
+        boolean isFavourite = sharedPreferences.movieIsFavourite(movie.getId());
+        boolean success = false;
+        if (isFavourite) {
+            success = sharedPreferences.removeFavouriteMovie(movie);
+        } else {
+            success = sharedPreferences.saveFavouriteMovie(movie);
+        }
+        if (success & isFavourite) {
+            view.updateFavouriteState();
+            view.showRemoveFavouriteSuccess();
+        } else if (success & !isFavourite) {
+            view.updateFavouriteState();
+            view.showAddFavouriteSuccess();
+        } else {
+            view.showFavouriteError();
+        }
+    }
+
+    @Override
+    public boolean isMoviePending(Movie movie) {
+        return sharedPreferences.movieIsPending(movie.getId());
+    }
+
+    @Override
+    public boolean isMovieFavourite(Movie movie) {
+        return sharedPreferences.movieIsFavourite(movie.getId());
+    }
+
 }
