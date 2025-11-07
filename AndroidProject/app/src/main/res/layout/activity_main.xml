@@ -44,7 +44,8 @@
                     android:id="@+id/svPeliculas"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:paddingTop="20dp" />
+                    android:paddingTop="20dp"
+                    android:iconifiedByDefault="false"/>
 
             </LinearLayout>
 
