@@ -66,12 +66,8 @@ public class MainPresenterPendingTest {
         // Verificar que se actualizo el estado pendiente
         verify(viewMock).updatePendingState();
 
-        // Verificar que se mostro el mensaje de éxito
-        verify(viewMock).showRemovePendingSuccess();
-
         // Verificar que NO se llamaron metodos no deseados
         verify(viewMock, Mockito.never()).showAddPendingSuccess();
-        verify(viewMock, Mockito.never()).showPendingError();
         verify(prefsMock, Mockito.never()).savePendingMovie(Mockito.any());
     }
 

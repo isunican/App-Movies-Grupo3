@@ -256,6 +256,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         Toast.makeText(this, "Película guardada correctamente en Favoritos", Toast.LENGTH_LONG).show();
     }
 
+    @Override
     public void showRemoveFavouriteSuccess() {
         Toast.makeText(this, "Película eliminada correctamente de Favoritos", Toast.LENGTH_LONG).show();
     }

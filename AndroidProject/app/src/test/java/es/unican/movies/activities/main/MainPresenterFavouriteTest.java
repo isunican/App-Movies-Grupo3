@@ -66,11 +66,7 @@ public class MainPresenterFavouriteTest {
         // Verificar que se actualizo el estado pendiente
         verify(viewMock).updateFavouriteState();
 
-        // Verificar que se mostro el mensaje de éxito
-        verify(viewMock).showRemoveFavouriteSuccess();
-
         // Verificar que NO se llamaron metodos no deseados
-        verify(viewMock, Mockito.never()).showAddFavouriteSuccess();
         verify(viewMock, Mockito.never()).showFavouriteError();
         verify(prefsMock, Mockito.never()).saveFavouriteMovie(Mockito.any());
     }

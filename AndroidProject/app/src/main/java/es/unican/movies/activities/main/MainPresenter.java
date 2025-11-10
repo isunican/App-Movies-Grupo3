@@ -47,7 +47,6 @@ public class MainPresenter implements IMainContract.Presenter {
             public void onSuccess(List<Movie> elements) {
                 allMovies = elements;
                 view.showMovies(elements);
-                view.showLoadCorrect(elements.size());
             }
 
             @Override
@@ -67,7 +66,6 @@ public class MainPresenter implements IMainContract.Presenter {
 
         if (name.isEmpty()) {
             view.showMovies(allMovies);
-            view.showLoadCorrect(allMovies.size());
             return;
         }
 
@@ -78,7 +76,6 @@ public class MainPresenter implements IMainContract.Presenter {
 
 
         view.showMovies(filteredMovies);
-        view.showLoadCorrect(filteredMovies.size());
     }
 
     @Override
@@ -92,10 +89,8 @@ public class MainPresenter implements IMainContract.Presenter {
         }
         if (success & isPending) {
             view.updatePendingState();
-            view.showRemovePendingSuccess();
         } else if (success & !isPending) {
             view.updatePendingState();
-            view.showAddPendingSuccess();
         } else {
             view.showPendingError();
         }
@@ -112,10 +107,8 @@ public class MainPresenter implements IMainContract.Presenter {
         }
         if (success & isFavourite) {
             view.updateFavouriteState();
-            view.showRemoveFavouriteSuccess();
         } else if (success & !isFavourite) {
             view.updateFavouriteState();
-            view.showAddFavouriteSuccess();
         } else {
             view.showFavouriteError();
         }
