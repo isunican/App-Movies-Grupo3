@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -13,6 +14,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.parceler.Parcels;
 
@@ -64,6 +67,8 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     private ListView lvMovies;
 
     private MovieAdapter adapter;
+
+    private FloatingActionButton fabUp;
 
     /**
      * Called when the activity is starting. Sets up the toolbar, presenter, and shared preferences.
@@ -127,6 +132,14 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         lvMovies.setOnItemClickListener((parent, view, position, id) -> {
             Movie movie = (Movie) parent.getItemAtPosition(position);
             presenter.onItemClicked(movie);
+        });
+
+        fabUp = findViewById(R.id.fabUp);
+        fabUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lvMovies.setSelection(0);
+            }
         });
 
         SearchView svMovies = findViewById(R.id.svPeliculas);
