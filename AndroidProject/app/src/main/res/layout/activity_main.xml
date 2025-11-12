@@ -61,10 +61,6 @@
                         android:paddingTop="20dp" />
 
                 </LinearLayout>
-
-                <SearchView
-                    android:layout_width="match_parent"
-                    android:layout_height="21dp" />
             </androidx.appcompat.widget.Toolbar>
 
             <ListView
