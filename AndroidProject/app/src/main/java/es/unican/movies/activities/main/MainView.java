@@ -176,6 +176,10 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         });
     }
 
+    /**
+     * Initializes the bottom toolbar and its buttons.
+     * Registers listeners that delegate actions to the presenter and update the visual state of the bottom bar.
+     */
     public void setLowerTollbar() {
         btnHome = findViewById(R.id.btnHome);
         btnHome.setOnClickListener(new View.OnClickListener() {
@@ -205,6 +209,12 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         });
     }
 
+    /**
+     * Updates the visual state of the bottom bar icons.
+     * Resets icons to their default state and highlights the icon corresponding to the clicked button.
+     *
+     * @param clickedId the id of the clicked button (R.id.btnHome, R.id.btnPending, R.id.btnFavourites)
+     */
     private void updateBottomBar(int clickedId) {
         btnHome.setImageResource(R.drawable.ic_home_empty);
         btnPending.setImageResource(R.drawable.pendingsymboltoolbar);
@@ -280,42 +290,79 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         startActivity(new Intent(this, InfoActivity.class));
     }
 
+    /**
+     * Notifies the view that the "Pending" state has changed.
+     * Typically used to refresh the displayed list after adding or removing a pending movie.
+     */
     @Override
     public void updatePendingState() {
         adapter.notifyDataSetChanged();
     }
 
+    /**
+     * Shows a confirmation to the user indicating the movie was added to "Pending".
+     * Displays a long-duration toast message.
+     */
     @Override
     public void showAddPendingSuccess() {
         Toast.makeText(this, "Película guardada correctamente en Pendientes", Toast.LENGTH_LONG).show();
     }
 
+    /**
+     * Shows a confirmation to the user indicating the movie was removed from "Pending".
+     * Displays a long-duration toast message.
+     */
     public void showRemovePendingSuccess() {
         Toast.makeText(this, "Película eliminada correctamente de Pendientes", Toast.LENGTH_LONG).show();
     }
 
+    /**
+     * Shows a generic error message related to "Pending" operations.
+     * Informs the user to try the action again.
+     */
     @Override
     public void showPendingError() {
         Toast.makeText(this, "Ha ocurrido un error. Por favor, vuelve a intentarlo", Toast.LENGTH_LONG).show();
     }
 
+    /**
+     * Notifies the view that the "Favourite" state has changed.
+     * Typically used to refresh the displayed list after adding or removing a favourite.
+     */
     @Override
     public void updateFavouriteState() { adapter.notifyDataSetChanged(); }
 
+    /**
+     * Shows a confirmation to the user indicating the movie was added to "Favourites".
+     * Displays a long-duration toast message.
+     */
     @Override
     public void showAddFavouriteSuccess() {
         Toast.makeText(this, "Película guardada correctamente en Favoritos", Toast.LENGTH_LONG).show();
     }
 
+    /**
+     * Shows a confirmation to the user indicating the movie was removed from "Favourites".
+     * Displays a long-duration toast message.
+     */
     public void showRemoveFavouriteSuccess() {
         Toast.makeText(this, "Película eliminada correctamente de Favoritos", Toast.LENGTH_LONG).show();
     }
 
+    /**
+     * Shows a generic error message related to "Favourite" operations.
+     * Informs the user to try the action again.
+     */
     @Override
     public void showFavouriteError() {
         Toast.makeText(this, "Ha ocurrido un error. Por favor, vuelve a intentarlo", Toast.LENGTH_LONG).show();
     }
 
+    /**
+     * Returns the shared preferences instance used by the view.
+     *
+     * @return the injected ISharedPreferences implementation
+     */
     @Override
     public ISharedPreferences getSharedPreferences() {
         return sharedPreferences;
