@@ -207,15 +207,15 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
     private void updateBottomBar(int clickedId) {
         btnHome.setImageResource(R.drawable.ic_home_empty);
-        btnPending.setImageResource(R.drawable.pendingsymbol);
-        btnFavourites.setImageResource(R.drawable.emptyheart);
+        btnPending.setImageResource(R.drawable.pendingsymboltoolbar);
+        btnFavourites.setImageResource(R.drawable.emptyhearttoolbar);
 
         if (clickedId == R.id.btnHome) {
             btnHome.setImageResource(R.drawable.ic_home);
         } else if (clickedId == R.id.btnPending) {
-            btnPending.setImageResource(R.drawable.pendingsymbol_filled);
+            btnPending.setImageResource(R.drawable.pendingsymboltoolbar_filled);
         } else if (clickedId == R.id.btnFavourites) {
-            btnFavourites.setImageResource(R.drawable.fullheart);
+            btnFavourites.setImageResource(R.drawable.fullhearttoolbar);
         }
     }
 
