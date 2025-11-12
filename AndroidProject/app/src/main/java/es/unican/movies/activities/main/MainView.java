@@ -6,6 +6,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -69,6 +71,10 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     private MovieAdapter adapter;
 
     private FloatingActionButton fabUp;
+
+    private ImageButton btnHome;
+    private ImageButton btnFavourites;
+    private ImageButton btnPending;
 
     /**
      * Called when the activity is starting. Sets up the toolbar, presenter, and shared preferences.
@@ -142,6 +148,8 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
             }
         });
 
+        setLowerTollbar();
+
         SearchView svMovies = findViewById(R.id.svPeliculas);
         svMovies.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
@@ -166,6 +174,49 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
             }
 
         });
+    }
+
+    public void setLowerTollbar() {
+        btnHome = findViewById(R.id.btnHome);
+        btnHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.onListHomeClicked();
+                updateBottomBar(R.id.btnHome);
+            }
+        });
+
+        btnFavourites = findViewById(R.id.btnFavourites);
+        btnFavourites.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.onListFavouritesClicked();
+                updateBottomBar(R.id.btnFavourites);
+            }
+        });
+
+        btnPending = findViewById(R.id.btnPending);
+        btnPending.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.onListPendingClicked();
+                updateBottomBar(R.id.btnPending);
+            }
+        });
+    }
+
+    private void updateBottomBar(int clickedId) {
+        btnHome.setImageResource(R.drawable.ic_home_empty);
+        btnPending.setImageResource(R.drawable.pendingsymbol);
+        btnFavourites.setImageResource(R.drawable.emptyheart);
+
+        if (clickedId == R.id.btnHome) {
+            btnHome.setImageResource(R.drawable.ic_home);
+        } else if (clickedId == R.id.btnPending) {
+            btnPending.setImageResource(R.drawable.pendingsymbol_filled);
+        } else if (clickedId == R.id.btnFavourites) {
+            btnFavourites.setImageResource(R.drawable.fullheart);
+        }
     }
 
 

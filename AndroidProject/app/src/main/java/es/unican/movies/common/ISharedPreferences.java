@@ -1,5 +1,7 @@
 package es.unican.movies.common;
 
+import java.util.List;
+
 import es.unican.movies.model.Movie;
 
 /**
@@ -63,5 +65,10 @@ public interface ISharedPreferences {
      *         {@code false} si hubo un error o el parámetro fue inválido
      */
     public boolean removeFavouriteMovie(Movie movie);
+
+
+    public List<Movie> getAllPendingMovies();
+
+    public List<Movie> getAllFavouriteMovies();
 
 }

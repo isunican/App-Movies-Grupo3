@@ -5,6 +5,10 @@ import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import es.unican.movies.model.Movie;
 
 
@@ -75,5 +79,28 @@ public class SharedPreferencesImpl implements ISharedPreferences {
     @Override
     public boolean removePendingMovie(Movie movie) {
         return prefsPending.edit().remove(String.valueOf(movie.getId())).commit();
+    }
+
+    @Override
+    public List<Movie> getAllPendingMovies() {
+        List<Movie> listaPending = new ArrayList<>();
+        prefsPending.getAll().forEach((key, value) -> {
+            Movie movie = gson.fromJson(value.toString(), Movie.class);
+            listaPending.add(movie);
+        });
+
+        return listaPending;
+    }
+
+    @Override
+    public List<Movie> getAllFavouriteMovies() {
+        List<Movie> listaFavourites = new ArrayList<>();
+        prefsFavourite.getAll().forEach((key, value) -> {
+            Movie movie = gson.fromJson(value.toString(), Movie.class);
+            listaFavourites.add(movie);
+        });
+
+        return listaFavourites;
+
     }
 }

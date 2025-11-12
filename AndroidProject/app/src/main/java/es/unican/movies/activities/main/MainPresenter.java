@@ -131,4 +131,23 @@ public class MainPresenter implements IMainContract.Presenter {
         return sharedPreferences.movieIsFavourite(movie.getId());
     }
 
+    @Override
+    public void onListHomeClicked() {
+        view.showMovies(allMovies);
+        view.showLoadCorrect(allMovies.size());
+    }
+
+    @Override
+    public void onListPendingClicked () {
+        List<Movie> pendingMovies = sharedPreferences.getAllPendingMovies();
+        view.showMovies(pendingMovies);
+        view.showLoadCorrect(pendingMovies.size());
+    }
+
+    @Override
+    public void onListFavouritesClicked () {
+        List<Movie> favouriteMovies = sharedPreferences.getAllFavouriteMovies();
+        view.showMovies(favouriteMovies);
+        view.showLoadCorrect(favouriteMovies.size());
+    }
 }

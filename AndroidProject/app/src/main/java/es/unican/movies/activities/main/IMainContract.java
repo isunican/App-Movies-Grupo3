@@ -76,6 +76,9 @@ public interface IMainContract {
          */
         public boolean isMovieFavourite(Movie movie);
 
+        public void onListHomeClicked();
+        public void onListFavouritesClicked();
+        public void onListPendingClicked();
     }
 
     /**
