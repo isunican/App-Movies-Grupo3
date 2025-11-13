@@ -60,14 +60,10 @@ public class MainPresenter implements IMainContract.Presenter {
     @Override
     public void onMovieSearch(String name) {
 
-        if (allMovies == null || allMovies.isEmpty()) {
-            load();
-            return;
-        }
-
         if (name.isEmpty()) {
             view.showMovies(allMovies);
             view.showLoadCorrect(allMovies.size());
+            view.updateEmptyListMessage("No se han encontrado películas con ese nombre.");
             return;
         }
 
@@ -142,6 +138,10 @@ public class MainPresenter implements IMainContract.Presenter {
         List<Movie> pendingMovies = sharedPreferences.getAllPendingMovies();
         view.showMovies(pendingMovies);
         view.showLoadCorrect(pendingMovies.size());
+
+        if (pendingMovies.isEmpty()) {
+            view.updateEmptyListMessage("No hay películas añadidas a la lista de pendientes.");
+        }
     }
 
     @Override
@@ -149,5 +149,9 @@ public class MainPresenter implements IMainContract.Presenter {
         List<Movie> favouriteMovies = sharedPreferences.getAllFavouriteMovies();
         view.showMovies(favouriteMovies);
         view.showLoadCorrect(favouriteMovies.size());
+
+        if (favouriteMovies.isEmpty()) {
+            view.updateEmptyListMessage("No hay películas añadidas a la lista de favoritas.");
+        }
     }
 }

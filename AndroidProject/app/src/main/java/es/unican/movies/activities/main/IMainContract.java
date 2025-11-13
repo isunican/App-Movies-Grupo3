@@ -176,5 +176,7 @@ public interface IMainContract {
          */
         public ISharedPreferences getSharedPreferences();
 
+        public void updateEmptyListMessage(String message);
+
     }
 }
